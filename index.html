@@ -72,18 +72,11 @@
     .n-logo {
       display: flex; align-items: center;
       text-decoration: none; justify-self: start;
-    }
-    /* pill bianco che isola il logo dalla bg scura */
-    .n-logo-wrap {
-      background: var(--cream);
-      border-radius: 8px;
-      padding: 5px 10px;
-      display: flex; align-items: center;
       transition: opacity .3s;
     }
-    .n-logo-wrap:hover { opacity: .85; }
+    .n-logo:hover { opacity: .75; }
     .n-logo img {
-      height: 34px; width: auto;
+      height: 42px; width: auto;
       display: block;
     }
 
@@ -647,9 +640,7 @@
 ═══════════════════════════════════════════════ -->
 <nav id="nav">
   <a href="#" class="n-logo" aria-label="PUBBY">
-    <div class="n-logo-wrap">
-      <img src="logo.png" alt="PUBBY" />
-    </div>
+    <img src="logo.png" alt="PUBBY" />
   </a>
   <ul class="n-links">
     <li><a href="#manifesto">Chi siamo</a></li>

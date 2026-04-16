@@ -576,15 +576,12 @@
       display: flex; justify-content: space-between; align-items: center;
     }
     .ft-logo {
-      display: flex; align-items: center; gap: .45rem;
+      display: flex; align-items: center;
       text-decoration: none;
+      transition: opacity .3s;
     }
-    .ft-logo-word {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900; font-size: 1.25rem;
-      letter-spacing: -.01em; line-height: 1;
-      color: var(--cream);
-    }
+    .ft-logo:hover { opacity: .7; }
+    .ft-logo img { height: 36px; width: auto; display: block; }
     .ft-copy {
       font-size: .62rem; letter-spacing: .06em;
       color: rgba(242,236,226,.22);
@@ -921,12 +918,7 @@
 ═══════════════════════════════════════════════ -->
 <footer>
   <a href="#" class="ft-logo" aria-label="PUBBY">
-    <svg width="18" height="25" viewBox="0 0 60 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width="20" height="82" rx="7" fill="#ff2e63"/>
-      <path d="M10 0 Q60 0 60 28 Q60 56 10 56Z" fill="#ff2e63"/>
-      <polygon points="20,7 20,49 54,28" fill="#1a1a2e"/>
-    </svg>
-    <span class="ft-logo-word">pubby</span>
+    <img src="logo.png" alt="PUBBY" />
   </a>
   <p class="ft-copy">© 2025 PUBBY Srl — Tutti i diritti riservati.</p>
   <ul class="ft-links">

@@ -15,7 +15,7 @@
     :root {
       --dark:       #1a1a2e;
       --cream:      #f2ece2;
-      --cherry:     #8b2132;
+      --cherry:     #ff2e63;
       --accent:     #ff2e63;
       --cream-40:   rgba(242,236,226,.40);
       --cream-60:   rgba(242,236,226,.60);
@@ -174,19 +174,8 @@
     .h-content {
       position: relative; z-index: 2;
       padding: 0 4rem;
+      padding-top: 9rem; /* clearance nav fisso */
       max-width: 860px;
-    }
-
-    .h-eyebrow {
-      display: flex; align-items: center; gap: .9rem;
-      font-size: .66rem; letter-spacing: .28em;
-      text-transform: uppercase; color: var(--accent);
-      margin-bottom: 2.4rem;
-      opacity: 0; animation: fadeUp .8s .35s forwards;
-    }
-    .h-eyebrow::before {
-      content: ''; display: block;
-      width: 32px; height: 1px; background: var(--accent);
     }
 
     .h-title {
@@ -195,7 +184,7 @@
       font-weight: 900; line-height: .91;
       color: var(--cream);
       margin-bottom: 2.4rem;
-      opacity: 0; animation: fadeUp .9s .5s forwards;
+      opacity: 0; /* GSAP animerà */
     }
     .h-title em { font-style: italic; color: var(--cherry); }
 
@@ -203,12 +192,12 @@
       font-size: 1rem; line-height: 1.88; font-weight: 300;
       color: var(--cream-60); max-width: 400px;
       margin-bottom: 3rem;
-      opacity: 0; animation: fadeUp .9s .68s forwards;
+      opacity: 0;
     }
 
     .h-actions {
       display: flex; align-items: center; gap: 2rem;
-      opacity: 0; animation: fadeUp .9s .86s forwards;
+      opacity: 0;
     }
 
     .btn-fill {
@@ -253,10 +242,6 @@
       100% { left: 100%; }
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(26px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
 
     /* ─── TICKER ────────────────────────────────────── */
     .ticker {
@@ -671,8 +656,6 @@
   <div class="h-ghost">P</div>
 
   <div class="h-content">
-    <p class="h-eyebrow">Prenota &nbsp;·&nbsp; Promuovi &nbsp;·&nbsp; Vivi</p>
-
     <h1 class="h-title">
       Il tuo locale,<br>
       <em>al centro</em><br>
@@ -955,24 +938,65 @@
 </footer>
 
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script>
+  gsap.registerPlugin(ScrollTrigger);
+
   // ── Navbar scroll class ──
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('s', scrollY > 60);
   }, { passive: true });
 
-  // ── Scroll reveal ──
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('on');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+  // ── Hero timeline ──
+  const hero = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  hero
+    .fromTo('.h-title',   { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.0 }, 0.2)
+    .fromTo('.h-body',    { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9 }, 0.5)
+    .fromTo('.h-actions', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8 }, 0.75)
+    .fromTo('.h-scroll',  { opacity: 0 },         { opacity: 0.28, duration: 0.6 },   1.1);
 
-  document.querySelectorAll('.r').forEach(el => io.observe(el));
+  // ── Scroll reveal per le sezioni (.r) ──
+  gsap.utils.toArray('.r').forEach(el => {
+    const delay = el.classList.contains('d1') ? 0.10
+                : el.classList.contains('d2') ? 0.22
+                : el.classList.contains('d3') ? 0.36
+                : el.classList.contains('d4') ? 0.50
+                : 0;
+
+    gsap.fromTo(el,
+      { opacity: 0, y: 32 },
+      {
+        opacity: 1, y: 0,
+        duration: 0.9,
+        delay,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  });
+
+  // ── Parallax leggero sulla ghost letter ──
+  gsap.to('.h-ghost', {
+    y: -80,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+
+  // ── Ticker hover pause ──
+  const track = document.querySelector('.ticker-track');
+  track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+  track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
 </script>
 
 </body>

@@ -6,7 +6,7 @@
   <title>PUBBY — Prenota. Scopri. Vivi.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     /* ─── RESET & TOKENS ────────────────────────────── */
@@ -63,12 +63,16 @@
     }
 
     .n-logo {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900; font-size: 1.55rem;
-      letter-spacing: .22em; text-transform: uppercase;
-      text-decoration: none; color: var(--cream);
+      display: flex; align-items: center; gap: .52rem;
+      text-decoration: none; flex-shrink: 0;
     }
-    .n-logo b { color: var(--cherry); font-weight: 900; }
+    .n-logo-mark { display: block; flex-shrink: 0; }
+    .n-logo-word {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900; font-size: 1.45rem;
+      letter-spacing: -.01em; line-height: 1;
+      color: var(--cream);
+    }
 
     .n-links { list-style: none; display: flex; gap: 2.6rem; }
     .n-links a {
@@ -577,12 +581,15 @@
       display: flex; justify-content: space-between; align-items: center;
     }
     .ft-logo {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900; font-size: 1.1rem;
-      letter-spacing: .22em; text-transform: uppercase;
+      display: flex; align-items: center; gap: .45rem;
+      text-decoration: none;
+    }
+    .ft-logo-word {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900; font-size: 1.25rem;
+      letter-spacing: -.01em; line-height: 1;
       color: var(--cream);
     }
-    .ft-logo b { color: var(--cherry); }
     .ft-copy {
       font-size: .62rem; letter-spacing: .06em;
       color: rgba(242,236,226,.22);
@@ -621,7 +628,18 @@
      NAV
 ═══════════════════════════════════════════════ -->
 <nav id="nav">
-  <a href="#" class="n-logo">PUB<b>B</b>Y</a>
+  <a href="#" class="n-logo" aria-label="PUBBY">
+    <!-- P icon mark — SVG replica del logo -->
+    <svg class="n-logo-mark" width="26" height="36" viewBox="0 0 60 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- stem -->
+      <rect x="0" y="0" width="20" height="82" rx="7" fill="#ff2e63"/>
+      <!-- bowl D-shape -->
+      <path d="M10 0 Q60 0 60 28 Q60 56 10 56Z" fill="#ff2e63"/>
+      <!-- triangle cutout pointing right -->
+      <polygon points="20,7 20,49 54,28" fill="#1a1a2e"/>
+    </svg>
+    <span class="n-logo-word">pubby</span>
+  </a>
   <ul class="n-links">
     <li><a href="#manifesto">Chi siamo</a></li>
     <li><a href="#services">Servizi</a></li>
@@ -915,7 +933,14 @@
      FOOTER
 ═══════════════════════════════════════════════ -->
 <footer>
-  <div class="ft-logo">PUB<b>B</b>Y</div>
+  <a href="#" class="ft-logo" aria-label="PUBBY">
+    <svg width="18" height="25" viewBox="0 0 60 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="20" height="82" rx="7" fill="#ff2e63"/>
+      <path d="M10 0 Q60 0 60 28 Q60 56 10 56Z" fill="#ff2e63"/>
+      <polygon points="20,7 20,49 54,28" fill="#1a1a2e"/>
+    </svg>
+    <span class="ft-logo-word">pubby</span>
+  </a>
   <p class="ft-copy">© 2025 PUBBY Srl — Tutti i diritti riservati.</p>
   <ul class="ft-links">
     <li><a href="#">Privacy</a></li>

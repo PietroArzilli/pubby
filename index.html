@@ -62,19 +62,35 @@
       border-bottom: 1px solid rgba(242,236,226,.06);
     }
 
-    .n-logo {
-      display: flex; align-items: center; gap: .52rem;
-      text-decoration: none; flex-shrink: 0;
-    }
-    .n-logo-mark { display: block; flex-shrink: 0; }
-    .n-logo-word {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900; font-size: 1.45rem;
-      letter-spacing: -.01em; line-height: 1;
-      color: var(--cream);
+    /* nav: 3-column grid — logo | links centrati | cta */
+    nav {
+      display: grid !important;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
     }
 
-    .n-links { list-style: none; display: flex; gap: 2.6rem; }
+    .n-logo {
+      display: flex; align-items: center;
+      text-decoration: none; justify-self: start;
+    }
+    /* pill bianco che isola il logo dalla bg scura */
+    .n-logo-wrap {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 5px 10px;
+      display: flex; align-items: center;
+      transition: opacity .3s;
+    }
+    .n-logo-wrap:hover { opacity: .85; }
+    .n-logo img {
+      height: 34px; width: auto;
+      display: block;
+    }
+
+    .n-links {
+      list-style: none; display: flex; gap: 2.6rem;
+      justify-self: center;
+    }
     .n-links a {
       font-size: .68rem; letter-spacing: .22em;
       text-transform: uppercase; text-decoration: none;
@@ -83,6 +99,7 @@
     }
     .n-links a:hover { opacity: 1; }
 
+    .n-right { justify-self: end; }
     .n-cta {
       font-size: .68rem; letter-spacing: .2em;
       text-transform: uppercase; text-decoration: none;
@@ -606,7 +623,8 @@
     /* ─── RESPONSIVE ────────────────────────────────── */
     @media (max-width: 960px) {
       nav, nav.s { padding-left: 2rem; padding-right: 2rem; }
-      .n-links, .n-cta { display: none; }
+      .n-links, .n-right { display: none; }
+      nav { grid-template-columns: 1fr; }
       .h-content { padding: 0 2rem; max-width: 100%; }
       .h-c1, .h-c2, .h-c3, .h-line, .h-dot-1 { display: none; }
       .h-ghost { font-size: 52vw; }
@@ -629,23 +647,18 @@
 ═══════════════════════════════════════════════ -->
 <nav id="nav">
   <a href="#" class="n-logo" aria-label="PUBBY">
-    <!-- P icon mark — SVG replica del logo -->
-    <svg class="n-logo-mark" width="26" height="36" viewBox="0 0 60 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- stem -->
-      <rect x="0" y="0" width="20" height="82" rx="7" fill="#ff2e63"/>
-      <!-- bowl D-shape -->
-      <path d="M10 0 Q60 0 60 28 Q60 56 10 56Z" fill="#ff2e63"/>
-      <!-- triangle cutout pointing right -->
-      <polygon points="20,7 20,49 54,28" fill="#1a1a2e"/>
-    </svg>
-    <span class="n-logo-word">pubby</span>
+    <div class="n-logo-wrap">
+      <img src="logo.png" alt="PUBBY" />
+    </div>
   </a>
   <ul class="n-links">
     <li><a href="#manifesto">Chi siamo</a></li>
     <li><a href="#services">Servizi</a></li>
     <li><a href="#join">Locali</a></li>
   </ul>
-  <a href="#join" class="n-cta">Inizia ora</a>
+  <div class="n-right">
+    <a href="#join" class="n-cta">Inizia ora</a>
+  </div>
 </nav>
 
 

@@ -348,7 +348,7 @@ body::before {
 @media (min-width: 760px) { .stats { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; } }
 .stat { padding-block: 22px; border-top: 1px solid var(--cream-faint); }
 .section--light .stat { border-color: rgba(48, 28, 27, 0.16); }
-.stat__v { font-family: var(--display); font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; }
+.stat__v { font-family: var(--display); font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
 .stat__l { margin-top: 8px; font-size: 0.9375rem; color: var(--cream-soft); }
 .section--light .stat__l { color: rgba(48, 28, 27, 0.72); }
 
@@ -426,7 +426,7 @@ body::before {
 .prose dd { margin-left: 0; color: rgba(48, 28, 27, 0.82); }
 .prose__date { font-size: 0.875rem; font-weight: 700; color: var(--red-deep); }
 .notice {
-  margin-top: 20px; padding: 20px 22px; border-radius: var(--radius);
-  border: 2px dashed var(--red-deep); background: rgba(176, 16, 48, 0.06);
+  margin-top: 20px; padding: 22px 24px; border-radius: var(--radius);
+  border-left: 3px solid var(--red-deep); background: rgba(176, 16, 48, 0.06);
 }
 .notice strong { display: block; margin-bottom: 6px; }

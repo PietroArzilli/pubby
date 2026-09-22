@@ -239,12 +239,12 @@ ul { list-style: none; }
 .menu .btn { margin-top: 20px; width: 100%; }
 
 /* ---------- hero ---------- */
-/* il bagliore sta su body::before: dentro all'hero verrebbe tagliato
-   dall'overflow e lascerebbe un bordo netto sotto all'header */
+/* niente bagliore colorato dietro all'hero: solo i due colori principali,
+   con un alone di marrone appena piu' chiaro per dare profondita' */
 body::before {
   content: '';
-  position: absolute; top: 0; left: -20%; right: -20%; height: 760px;
-  background: radial-gradient(52% 58% at 34% 26%, rgba(255, 59, 92, 0.24), transparent 72%);
+  position: absolute; top: 0; left: -20%; right: -20%; height: 720px;
+  background: radial-gradient(58% 62% at 30% 20%, rgba(90, 58, 54, 0.55), transparent 72%);
   pointer-events: none; z-index: 0;
 }
 .hero { position: relative; overflow: hidden; padding-block: clamp(40px, 8vw, 88px) var(--pad-y); }
@@ -287,11 +287,10 @@ body::before {
 .section--light .step__n { color: var(--red-deep); }
 .step h3 { font-family: var(--display); text-transform: uppercase; font-size: 1.5rem; font-weight: 400; line-height: 1.05; margin-block: 12px 10px; }
 .step p { color: var(--cream-soft); }
-.step .figure { margin-top: 22px; }
+.step .figure { margin-top: 22px; max-width: 300px; margin-inline: 0; }
 .step .shot {
   /* dentro ai passi mostro solo la parte alta della schermata: la sezione
      resta corta su telefono e il dettaglio si legge meglio */
-  max-width: 300px; margin-inline: 0;
   aspect-ratio: 4 / 5; object-fit: cover; object-position: top center;
 }
 .section--light .step p { color: rgba(48, 28, 27, 0.75); }
@@ -309,15 +308,23 @@ body::before {
 
 /* screenshot */
 .shot {
-  /* le sorgenti sono larghe 640px: tenendole a 320 CSS px restano nitide su schermi 2x */
-  width: 100%; max-width: 320px; height: auto; margin-inline: auto;
+  /* le sorgenti sono larghe 640px: il riquadro le tiene a 320 CSS px,
+     cosi' restano nitide su schermi 2x */
+  width: 100%; height: auto;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 236, 171, 0.16);
   box-shadow: 0 34px 70px -28px rgba(0, 0, 0, 0.75);
   background: #0c0908;
 }
 .shot--sm { max-width: 260px; }
-.figure { margin: 0; }
+.figure { margin: 0; max-width: 320px; margin-inline: auto; }
+.shots .figure { max-width: none; }
+/* nelle sezioni a due colonne la schermata si appoggia al margine esterno,
+   in asse con il blocco di testo dall'altra parte */
+@media (min-width: 860px) {
+  .grid--2 > .figure { margin-inline: auto 0; }
+  .grid--2 > .figure.to-left { margin-inline: 0 auto; }
+}
 .figure figcaption { margin-top: 14px; font-size: 0.8125rem; color: var(--cream-soft); }
 .section--light .figure figcaption { color: rgba(48, 28, 27, 0.65); }
 .shots { display: grid; gap: 20px; align-items: start; }

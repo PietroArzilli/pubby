@@ -24,11 +24,12 @@
 <meta name="twitter:description" content="I locali e le serate intorno a te a Forlì-Cesena e in Riviera. Prenoti dall'app in un attimo.">
 <meta name="twitter:image" content="https://www.pubby.it/assets/og/pubby-og.jpg">
 
+<link rel="icon" href="assets/icons/pubby-icon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/icons/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
 <link rel="manifest" href="site.webmanifest">
 
-<link rel="preload" href="assets/fonts/brunson.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
 
@@ -95,13 +96,11 @@
       <p class="lead">Guardi chi è aperto, scegli la serata che ti va, prenoti il tavolo. Pubby si occupa della parte noiosa.</p>
 
       <div class="stores" id="scarica">
-        <a class="btn btn--cream btn--store" href="https://apps.apple.com/it/app/pubby/id6772457653">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.86 2.33-4.23 2.44-4.3-1.33-1.95-3.4-2.22-4.14-2.25-1.76-.18-3.44 1.04-4.34 1.04-.9 0-2.27-1.02-3.74-.99-1.92.03-3.7 1.12-4.68 2.84-2 3.47-.51 8.6 1.44 11.41.95 1.38 2.08 2.92 3.56 2.87 1.43-.06 1.97-.92 3.7-.92 1.73 0 2.21.92 3.72.89 1.54-.03 2.51-1.4 3.45-2.79 1.09-1.6 1.54-3.15 1.56-3.23-.03-.01-2.99-1.15-3.02-4.57zM14.3 3.9c.79-.96 1.33-2.29 1.18-3.62-1.14.05-2.52.76-3.34 1.72-.73.85-1.37 2.21-1.2 3.51 1.27.1 2.57-.65 3.36-1.61z"/></svg>
-          <span class="txt"><small>Scarica su</small><b>App Store</b></span>
+        <a class="badge badge--apple" href="https://apps.apple.com/it/app/pubby/id6772457653">
+          <img src="assets/badges/app-store-it.svg" alt="Scaricalo su App Store" width="138" height="46">
         </a>
-        <a class="btn btn--cream btn--store" href="https://play.google.com/store/apps/details?id=it.pubby.pubby">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8c-.3.32-.48.81-.48 1.45v17.5c0 .64.18 1.13.48 1.45l.06.06 9.8-9.8v-.23l-9.8-9.8-.06.06zm13.2 14.1-3.27-3.27v-.23l3.27-3.27.08.05 3.87 2.2c1.1.63 1.1 1.65 0 2.28l-3.87 2.2-.08.04zm.08-.04-3.35-3.35-9.86 9.86c.36.38.96.43 1.64.05l11.57-6.56m0-7.72L5.31 1.58C4.63 1.2 4.03 1.25 3.67 1.63l9.86 9.86 3.35-3.35z"/></svg>
-          <span class="txt"><small>Scarica su</small><b>Google Play</b></span>
+        <a class="badge badge--google" href="https://play.google.com/store/apps/details?id=it.pubby.pubby">
+          <img src="assets/badges/google-play-it.png" alt="Disponibile su Google Play" width="155" height="60">
         </a>
       </div>
 
@@ -114,7 +113,7 @@
     <div class="wrap">
       <div class="head rv">
         <p class="eyebrow">Il punto</p>
-        <h2 class="d2">Organizzare la serata è la parte peggiore della serata.</h2>
+        <h2 class="d2">La parte peggiore<br>della serata?<br>Organizzarla.</h2>
       </div>
 
       <div class="beats rv">
@@ -128,39 +127,51 @@
   <!-- ══ COME FUNZIONA ══ -->
   <section class="section section--light" id="come-funziona">
     <div class="wrap">
-      <div class="grid grid--2">
-        <div class="rv">
-          <p class="eyebrow">Come funziona</p>
-          <h2 class="d2" style="margin-block:14px 18px">Tre schermate<br>e sei a posto.</h2>
-          <p class="lead">Apri l'app e hai davanti i locali della zona, con le serate di oggi e dei prossimi giorni. Scegli, prenoti, ti presenti.</p>
+      <div class="head rv">
+        <p class="eyebrow">Come funziona</p>
+        <h2 class="d2">Tre schermate<br>e sei a posto.</h2>
+        <p class="lead" style="margin-top:18px">Apri l'app e hai davanti i locali della zona con le serate di oggi e dei prossimi giorni. Scegli, prenoti, ti presenti.</p>
+      </div>
 
-          <div class="steps">
-            <div class="step">
-              <div class="step__n">01</div>
-              <h3>Scegli il posto</h3>
-              <p>Locali e ristoranti intorno a te, filtrati per il tipo di serata che hai in testa.</p>
-            </div>
-            <div class="step">
-              <div class="step__n">02</div>
-              <h3>Prenota il tavolo</h3>
-              <p>Data, orario, quante persone. Il turno ti dice subito quanti posti restano.</p>
-            </div>
-            <div class="step">
-              <div class="step__n">03</div>
-              <h3>Presentati</h3>
-              <p>Il locale ha già il tuo nome in lista. Tu devi solo arrivare in orario.</p>
-            </div>
-          </div>
+      <div class="steps rv">
+        <div class="step">
+          <div class="step__n">01</div>
+          <h3>Cerca</h3>
+          <p>Locali, organizzatori ed eventi, filtrati per il tipo di serata che hai in testa.</p>
+          <figure class="figure">
+            <picture>
+              <source srcset="assets/screenshots/utente-ricerca.avif" type="image/avif">
+              <img class="shot" src="assets/screenshots/utente-ricerca.jpg" width="640" height="1270"
+                   alt="Ricerca nell'app Pubby, con le schede Locali, Organizzatori ed Eventi" loading="lazy" decoding="async">
+            </picture>
+          </figure>
         </div>
 
-        <figure class="figure rv">
-          <picture>
-            <source srcset="assets/screenshots/01-app-utente.avif" type="image/avif">
-            <img class="shot" src="assets/screenshots/01-app-utente.jpg" width="640" height="950"
-                 alt="Schermata dell'app Pubby con le categorie di serata e l'elenco dei locali vicini" loading="lazy" decoding="async">
-          </picture>
-          <figcaption>L'app, lato utente.</figcaption>
-        </figure>
+        <div class="step">
+          <div class="step__n">02</div>
+          <h3>Guarda il posto</h3>
+          <p>Foto, orari, che tipo di locale è e quali serate ha in programma.</p>
+          <figure class="figure">
+            <picture>
+              <source srcset="assets/screenshots/utente-locale.avif" type="image/avif">
+              <img class="shot" src="assets/screenshots/utente-locale.jpg" width="640" height="1270"
+                   alt="Scheda di un locale su Pubby con orari, lista eventi e il pulsante Prenota un tavolo" loading="lazy" decoding="async">
+            </picture>
+          </figure>
+        </div>
+
+        <div class="step">
+          <div class="step__n">03</div>
+          <h3>Prenota</h3>
+          <p>Giorno, turno, quante persone. Il turno ti dice subito se c'è posto.</p>
+          <figure class="figure">
+            <picture>
+              <source srcset="assets/screenshots/utente-prenota.avif" type="image/avif">
+              <img class="shot" src="assets/screenshots/utente-prenota.jpg" width="640" height="1270"
+                   alt="Schermata di prenotazione con data, turno, numero di persone e note" loading="lazy" decoding="async">
+            </picture>
+          </figure>
+        </div>
       </div>
     </div>
   </section>
@@ -168,20 +179,31 @@
   <!-- ══ COSA TROVI ══ -->
   <section class="section grain" id="serate">
     <div class="wrap">
-      <div class="head rv">
-        <p class="eyebrow">Cosa trovi</p>
-        <h2 class="d2">Non solo cena.</h2>
-        <p class="lead" style="margin-top:18px">Pubby raccoglie anche le serate: il live del venerdì, la partita, l'aperitivo lungo, il brunch della domenica. Se un locale la pubblica, tu la vedi.</p>
-      </div>
+      <div class="grid grid--2">
+        <div class="rv">
+          <p class="eyebrow">Cosa trovi</p>
+          <h2 class="d2" style="margin-block:14px 18px">Non solo cena.</h2>
+          <p class="lead">Pubby raccoglie anche le serate: il live del venerdì, la partita, l'aperitivo lungo, il brunch della domenica. Se un locale la pubblica, tu la vedi.</p>
 
-      <ul class="chips rv">
-        <li class="chip chip--on">Aperitivo</li>
-        <li class="chip">Live Music</li>
-        <li class="chip">Cocktail</li>
-        <li class="chip">Evento Sportivo</li>
-        <li class="chip">Brunch</li>
-        <li class="chip">E il resto della settimana</li>
-      </ul>
+          <ul class="chips">
+            <li class="chip chip--on">Aperitivo</li>
+            <li class="chip">Live Music</li>
+            <li class="chip">Cocktail</li>
+            <li class="chip">Evento Sportivo</li>
+            <li class="chip">Brunch</li>
+            <li class="chip">E il resto della settimana</li>
+          </ul>
+        </div>
+
+        <figure class="figure rv">
+          <picture>
+            <source srcset="assets/screenshots/utente-home.avif" type="image/avif">
+            <img class="shot" src="assets/screenshots/utente-home.jpg" width="640" height="1270"
+                 alt="Home dell'app Pubby: i locali e ristoranti, le serate vicino a te e i suggerimenti per un aperitivo" loading="lazy" decoding="async">
+          </picture>
+          <figcaption>Quello che vedi aprendo l'app.</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -238,13 +260,11 @@
       <div class="rv">
         <h2 class="d1">Il posto<br>per stasera<br>ce l'hai<br>in tasca.</h2>
         <div class="stores" style="margin-top:36px">
-          <a class="btn btn--cream btn--store" href="https://apps.apple.com/it/app/pubby/id6772457653">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.86 2.33-4.23 2.44-4.3-1.33-1.95-3.4-2.22-4.14-2.25-1.76-.18-3.44 1.04-4.34 1.04-.9 0-2.27-1.02-3.74-.99-1.92.03-3.7 1.12-4.68 2.84-2 3.47-.51 8.6 1.44 11.41.95 1.38 2.08 2.92 3.56 2.87 1.43-.06 1.97-.92 3.7-.92 1.73 0 2.21.92 3.72.89 1.54-.03 2.51-1.4 3.45-2.79 1.09-1.6 1.54-3.15 1.56-3.23-.03-.01-2.99-1.15-3.02-4.57zM14.3 3.9c.79-.96 1.33-2.29 1.18-3.62-1.14.05-2.52.76-3.34 1.72-.73.85-1.37 2.21-1.2 3.51 1.27.1 2.57-.65 3.36-1.61z"/></svg>
-            <span class="txt"><small>Scarica su</small><b>App Store</b></span>
+          <a class="badge badge--apple" href="https://apps.apple.com/it/app/pubby/id6772457653">
+            <img src="assets/badges/app-store-it.svg" alt="Scaricalo su App Store" width="138" height="46">
           </a>
-          <a class="btn btn--cream btn--store" href="https://play.google.com/store/apps/details?id=it.pubby.pubby">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8c-.3.32-.48.81-.48 1.45v17.5c0 .64.18 1.13.48 1.45l.06.06 9.8-9.8v-.23l-9.8-9.8-.06.06zm13.2 14.1-3.27-3.27v-.23l3.27-3.27.08.05 3.87 2.2c1.1.63 1.1 1.65 0 2.28l-3.87 2.2-.08.04zm.08-.04-3.35-3.35-9.86 9.86c.36.38.96.43 1.64.05l11.57-6.56m0-7.72L5.31 1.58C4.63 1.2 4.03 1.25 3.67 1.63l9.86 9.86 3.35-3.35z"/></svg>
-            <span class="txt"><small>Scarica su</small><b>Google Play</b></span>
+          <a class="badge badge--google" href="https://play.google.com/store/apps/details?id=it.pubby.pubby">
+            <img src="assets/badges/google-play-it.png" alt="Disponibile su Google Play" width="155" height="60">
           </a>
         </div>
       </div>
@@ -291,10 +311,16 @@
           <li><a href="https://www.instagram.com/pubbyit/" rel="me noopener">Instagram @pubbyit</a></li>
         </ul>
       </div>
+
+      <div>
+        <h2>Legale</h2>
+        <ul>
+          <li><a href="privacy.html">Privacy e cookie</a></li>
+          <li><a href="note-legali.html">Note legali</a></li>
+        </ul>
+      </div>
     </div>
 
-    <!-- TODO: le pagine legali non esistono ancora. Quando ci sono, aggiungere qui
-         i link a privacy policy, cookie policy, termini e note legali. -->
     <p class="footer__legal">
       <strong>Pubby S.r.l.</strong> · Sede legale: Via Gioacchino Rossini 10, Dogana, Repubblica di San Marino · COE: SM31894<br>
       © <span id="anno">2026</span> Pubby S.r.l. — Tutti i diritti riservati.

@@ -70,7 +70,14 @@
 /* ---------- reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* l'intestazione e' appiccicata in alto ed e' alta 77px: senza questo
+     margine il salto a un'ancora finisce proprio sotto di lei e il
+     bersaglio resta coperto */
+  scroll-padding-top: 100px;
+}
 body {
   font-family: var(--text);
   font-size: 1.0625rem;

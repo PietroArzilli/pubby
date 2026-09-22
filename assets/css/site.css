@@ -142,6 +142,10 @@ ul { list-style: none; }
   text-wrap: balance;
 }
 .d1 { font-size: clamp(3.4rem, 15.5vw, 8.5rem); }
+/* il titolo della sezione finale sta piu' basso dell'hero: cosi' il titolo
+   e i due badge entrano insieme anche in una finestra da 700px di altezza,
+   che e' dove atterra chi clicca "Scarica l'app" nella barra */
+.d1--cta { font-size: clamp(2.8rem, 11vw, 5rem); }
 .d2 { font-size: clamp(2.6rem, 10vw, 5.2rem); }
 .d3 { font-size: clamp(2rem, 6.6vw, 3.2rem); }
 .d4 { font-size: clamp(1.4rem, 4.4vw, 1.9rem); line-height: 1; }

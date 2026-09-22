@@ -345,13 +345,12 @@ body::before {
 
 /* numeri */
 .stats { display: grid; gap: 4px; margin-top: 46px; }
-@media (min-width: 760px) { .stats { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+@media (min-width: 760px) { .stats { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; } }
 .stat { padding-block: 22px; border-top: 1px solid var(--cream-faint); }
 .section--light .stat { border-color: rgba(48, 28, 27, 0.16); }
 .stat__v { font-family: var(--display); font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; }
 .stat__l { margin-top: 8px; font-size: 0.9375rem; color: var(--cream-soft); }
 .section--light .stat__l { color: rgba(48, 28, 27, 0.72); }
-[data-todo] { outline: 2px dashed var(--red); outline-offset: 6px; }
 
 /* card generiche */
 .cards { display: grid; gap: 16px; margin-top: 40px; }

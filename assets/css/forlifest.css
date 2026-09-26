@@ -1,0 +1,162 @@
+/* =========================================================
+   Pubby × Forlì Fest — pagina iscrizione alle liste
+   Si appoggia a site.css: stessi token, stessi font, stessi bottoni.
+   Qui solo i pezzi che esistono in questa pagina.
+   Lista scelta: cerchio e bordo rossi, il testo resta crema sul marrone.
+   Date: card crema con testo marrone (13,8:1).
+   Il rosso pieno non ospita mai testo crema, come nel resto del sito.
+   Anton con parsimonia: si arriva quasi tutti da telefono, quindi resta
+   solo sul titolo, sui numeri 01/02 e sulle date. Il resto e' Manrope.
+   ========================================================= */
+
+/* ---------- header della collab ---------- */
+.collab { display: flex; align-items: center; gap: 14px; padding-block: 16px; }
+.collab__x { font-weight: 800; font-size: 1.125rem; line-height: 1; color: var(--red); }
+/* il gallo ha il contorno nero: sul marrone sparirebbe, quindi sta
+   su una piastrella crema, che e' anche il suo fondo originale */
+.collab__ff {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.collab__tile {
+  display: grid; place-items: center;
+  width: 46px; height: 46px; border-radius: 12px;
+  background: var(--cream);
+  padding: 7px;
+}
+.collab__tile img { width: 100%; height: auto; }
+.collab__name { font-weight: 800; font-size: 1rem; line-height: 1.1; }
+.collab .logo img { width: 92px; }
+@media (min-width: 560px) {
+  .collab { gap: 18px; }
+  .collab .logo img { width: 110px; }
+  .collab__tile { width: 54px; height: 54px; }
+  .collab__name { font-size: 1.125rem; }
+}
+
+/* ---------- hero ---------- */
+.ff-hero { position: relative; overflow: hidden; padding-block: clamp(28px, 6vw, 64px) clamp(40px, 8vw, 72px); }
+.ff-hero .d1 { font-size: clamp(2.6rem, 12vw, 6rem); margin-block: 14px 18px; }
+
+/* ---------- form ---------- */
+.ff { padding-bottom: var(--pad-y); position: relative; z-index: 1; }
+.ff__form { max-width: 720px; }
+
+.ff__step { border: 0; padding-top: 38px; margin-top: 38px; border-top: 1px solid var(--cream-faint); min-width: 0; }
+.ff__step:first-of-type { margin-top: 0; }
+.ff__legend { display: flex; align-items: baseline; gap: 14px; padding: 0; float: left; width: 100%; }
+/* la legend flottante esce dal bordo del fieldset: cosi' la riga resta sopra
+   il titolo invece di attraversarlo */
+.ff__legend + * { clear: both; }
+.ff__n { font-family: var(--display); font-size: 2rem; line-height: 1; color: var(--red); }
+.ff__t { font-size: clamp(1.25rem, 4.6vw, 1.5rem); font-weight: 800; line-height: 1.15; }
+.ff__hint { padding-top: 8px; font-size: 0.9375rem; color: var(--cream-soft); }
+
+/* 01 — le liste: radio button in colonna. L'input vero resta nascosto
+   ma raggiungibile da tastiera e lettori di schermo; il cerchio e' disegnato */
+.radio input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.lists { display: grid; gap: 10px; margin-top: 22px; }
+.radio { position: relative; display: block; cursor: pointer; }
+.radio__box {
+  display: flex; align-items: center; gap: 14px;
+  min-height: 56px; padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--cream-faint);
+  background: var(--brown-soft);
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+.radio:hover .radio__box { border-color: var(--cream-soft); }
+.radio input:focus-visible + .radio__box { outline: 3px solid var(--red); outline-offset: 3px; }
+.radio__dot {
+  flex: none; width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid var(--cream-soft);
+  display: grid; place-items: center;
+  transition: border-color 0.18s ease;
+}
+.radio__dot::after {
+  content: ''; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--red); transform: scale(0); transition: transform 0.15s ease;
+}
+.radio__name { font-weight: 800; font-size: 1.0625rem; line-height: 1.2; }
+.radio input:checked + .radio__box { border-color: var(--red); background: rgba(255, 59, 92, 0.1); }
+.radio input:checked + .radio__box .radio__dot { border-color: var(--red); }
+.radio input:checked + .radio__box .radio__dot::after { transform: scale(1); }
+
+/* 02 — i dati */
+.fields { display: grid; gap: 16px; margin-top: 22px; }
+@media (min-width: 560px) { .fields { grid-template-columns: 1fr 1fr; } }
+.field label { display: block; font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.field input {
+  width: 100%;
+  font: inherit; font-size: 1.0625rem; font-weight: 600; color: var(--cream);
+  background: var(--brown-deep);
+  border: 1.5px solid rgba(255, 236, 171, 0.28);
+  border-radius: 14px;
+  padding: 14px 16px;
+  min-height: 52px;
+  transition: border-color 0.18s ease;
+  -webkit-appearance: none; appearance: none;
+}
+.field input:hover { border-color: var(--cream-soft); }
+.field input:focus { outline: none; border-color: var(--cream); box-shadow: 0 0 0 3px rgba(255, 59, 92, 0.55); }
+.field input[aria-invalid='true'] { border-color: var(--red); }
+.field__err { margin-top: 6px; font-size: 0.875rem; font-weight: 700; color: var(--red); }
+.field__err:empty { display: none; }
+
+/* promemoria delle date nell'hero: non si sceglie, si ricorda.
+   Numeri grandi come elemento grafico, come l'8 € del sito */
+.dates { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 28px; max-width: 440px; }
+.date {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: var(--cream); color: var(--brown);
+}
+.date__day { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-deep); }
+.date__n { font-family: var(--display); font-size: clamp(3.4rem, 17vw, 5rem); line-height: 0.9; font-variant-numeric: tabular-nums; }
+.date__m { font-weight: 800; font-size: 1rem; line-height: 1.1; color: rgba(48, 28, 27, 0.72); }
+.dates__note { margin-top: 14px; font-size: 0.9375rem; font-weight: 700; color: var(--cream-soft); }
+
+.group-err { margin-top: 12px; font-size: 0.875rem; font-weight: 700; color: var(--red); }
+.group-err:empty { display: none; }
+
+/* consenso */
+.consent { display: flex; gap: 12px; align-items: flex-start; margin-top: 34px; font-size: 0.9375rem; color: var(--cream-soft); cursor: pointer; }
+.consent input { flex: none; width: 22px; height: 22px; margin-top: 1px; accent-color: var(--red); }
+.consent a { color: var(--cream); font-weight: 700; }
+
+.ff__info { margin-top: 14px; font-size: 0.8125rem; color: var(--cream-soft); }
+.ff__info summary { cursor: pointer; font-weight: 700; color: var(--cream); }
+.ff__info p { margin-top: 10px; max-width: 64ch; }
+.ff__info a { color: var(--cream); }
+
+/* invio */
+.ff__send { margin-top: 28px; }
+.ff__send .btn { width: 100%; padding-block: 18px; font-size: 1.0625rem; }
+@media (min-width: 560px) { .ff__send .btn { width: auto; padding-inline: 36px; } }
+.ff__send .btn[disabled] { opacity: 0.6; cursor: progress; transform: none; }
+
+.ff__alert {
+  margin-top: 20px; padding: 16px 18px; border-radius: 14px;
+  border-left: 3px solid var(--red); background: rgba(255, 59, 92, 0.1);
+  font-weight: 700;
+}
+.ff__alert:empty { display: none; }
+
+/* conferma */
+.done { max-width: 720px; }
+.done[hidden] { display: none; }
+.done .d1 { font-size: clamp(2.6rem, 12vw, 6rem); margin-block: 14px 18px; }
+.done__when { display: block; margin-top: 6px; font-size: 0.5em; line-height: 1.05; }
+.done__card {
+  margin-top: 30px; padding: clamp(22px, 5vw, 32px);
+  border-radius: var(--radius-lg);
+  background: var(--red); color: var(--brown);
+  max-width: 440px;
+}
+.done__list { font-weight: 800; font-size: clamp(1.5rem, 6vw, 1.875rem); line-height: 1.1; }
+.done__card p { margin-top: 10px; font-weight: 700; }
+.done__card small { display: block; margin-top: 12px; font-size: 0.8125rem; font-weight: 700; opacity: 0.72; }
+
+/* footer ridotto */
+.ff-foot { padding-block: 32px; border-top: 1px solid var(--cream-faint); background: var(--brown-deep); font-size: 0.8125rem; color: var(--cream-soft); }
+.ff-foot a { color: inherit; }

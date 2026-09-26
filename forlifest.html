@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Forlì Fest × Pubby — mettiti in lista</title>
+<meta name="description" content="Due sere di Forlì Fest, il 10 e l'11 ottobre. Scegli la tua lista, lascia i tuoi dati e ci vediamo all'ingresso.">
+<!-- pagina interna: ci si arriva dal link in bio, non dai motori di ricerca
+     e non dal menù del sito. Per questo non e' nemmeno in sitemap.xml -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#301c1b">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Pubby">
+<meta property="og:title" content="Forlì Fest × Pubby — mettiti in lista">
+<meta property="og:description" content="Due sere di Forlì Fest. Scegli la tua lista e ci vediamo all'ingresso.">
+<meta property="og:image" content="https://www.pubby.it/assets/og/pubby-og.jpg">
+
+<link rel="icon" href="assets/icons/pubby-icon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icons/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+
+<link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/forlifest.css">
+</head>
+
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+
+<header class="header" id="header">
+  <div class="wrap collab">
+    <a class="logo" href="/"><img src="assets/logo-cream.png" alt="Pubby" width="104" height="38"></a>
+    <span class="collab__x" aria-hidden="true">×</span>
+    <span class="collab__ff">
+      <span class="collab__tile"><img src="assets/forlifest/logo-forlifest.png" alt="" width="480" height="380"></span>
+      <span class="collab__name">Forlì Fest</span>
+    </span>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="ff-hero grain">
+    <div class="wrap hero__inner" id="intro">
+      <p class="eyebrow">Forlì Fest · 10–11 ottobre</p>
+      <h1 class="d1">Mettiti in lista.<br>Al resto<br><span class="acc">pensiamo noi.</span></h1>
+      <p class="lead">Due sere di Forlì Fest. Scegli la tua lista, lascia i tuoi dati e ci vediamo all'ingresso.</p>
+
+      <!-- promemoria, non una scelta: chi si iscrive e' in lista per tutte e due le sere -->
+      <div class="dates" aria-label="Le date: sabato 10 e domenica 11 ottobre">
+        <div class="date"><span class="date__day">Sabato</span><span class="date__n">10</span><span class="date__m">ottobre</span></div>
+        <div class="date"><span class="date__day">Domenica</span><span class="date__n">11</span><span class="date__m">ottobre</span></div>
+      </div>
+      <p class="dates__note">Segnatele: la lista vale per tutte e due le sere.</p>
+    </div>
+  </section>
+
+  <section class="ff">
+    <div class="wrap">
+
+      <!-- le iscrizioni vanno su Supabase (schema in supabase/forlifest.sql).
+           data-supabase-key e' la chiave pubblica (publishable/anon): puo'
+           stare qui, la tabella e' chiusa e si entra solo dalla funzione.
+           Mai la chiave secret / service_role.
+           Chiave vuota = il form non invia nulla e lo dice. -->
+      <form class="ff__form" id="ff-form" novalidate
+            data-supabase-url="https://kntjqcusvqrstjeruffq.supabase.co"
+            data-supabase-key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtudGpxY3VzdnFyc3RqZXJ1ZmZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MzMyNjMsImV4cCI6MjEwNjAwOTI2M30.wNh78u7gNKq-bu73Zs6BBH7MjgICYC5v4AiO14YN_40">
+
+        <fieldset class="ff__step" aria-describedby="err-lista">
+          <legend class="ff__legend"><span class="ff__n">01</span><span class="ff__t">La tua lista</span></legend>
+          <p class="ff__hint">Con chi entri? Scegline una.</p>
+          <div class="lists">
+            <label class="radio"><input type="radio" name="lista" value="Locali" required><span class="radio__box"><span class="radio__dot"></span><span class="radio__name">Locali</span></span></label>
+            <label class="radio"><input type="radio" name="lista" value="SpottedUni"><span class="radio__box"><span class="radio__dot"></span><span class="radio__name">SpottedUni</span></span></label>
+            <label class="radio"><input type="radio" name="lista" value="Younivibes"><span class="radio__box"><span class="radio__dot"></span><span class="radio__name">Younivibes</span></span></label>
+            <label class="radio"><input type="radio" name="lista" value="Baila Bonita"><span class="radio__box"><span class="radio__dot"></span><span class="radio__name">Baila Bonita</span></span></label>
+          </div>
+          <p class="group-err" id="err-lista" role="alert"></p>
+        </fieldset>
+
+        <fieldset class="ff__step">
+          <legend class="ff__legend"><span class="ff__n">02</span><span class="ff__t">I tuoi dati</span></legend>
+          <p class="ff__hint">Quelli veri: all'ingresso cerchiamo il tuo nome.</p>
+          <div class="fields">
+            <div class="field">
+              <label for="nome">Nome</label>
+              <input id="nome" name="nome" type="text" autocomplete="given-name" autocapitalize="words" required maxlength="60" aria-describedby="err-nome">
+              <p class="field__err" id="err-nome"></p>
+            </div>
+            <div class="field">
+              <label for="cognome">Cognome</label>
+              <input id="cognome" name="cognome" type="text" autocomplete="family-name" autocapitalize="words" required maxlength="60" aria-describedby="err-cognome">
+              <p class="field__err" id="err-cognome"></p>
+            </div>
+            <div class="field">
+              <label for="telefono">Telefono</label>
+              <input id="telefono" name="telefono" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" aria-describedby="err-telefono">
+              <p class="field__err" id="err-telefono"></p>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" required maxlength="120" aria-describedby="err-email">
+              <p class="field__err" id="err-email"></p>
+            </div>
+          </div>
+          <!-- trappola per i bot: invisibile alle persone, se e' piena l'invio si ferma -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px">
+            <label for="sito">Lascia vuoto</label>
+            <input id="sito" name="sito" type="text" tabindex="-1" autocomplete="off">
+          </div>
+        </fieldset>
+        <label class="consent">
+          <input type="checkbox" name="consenso" id="consenso" required aria-describedby="err-consenso">
+          <span>Ho letto come trattate i miei dati (qui sotto) e vi autorizzo a usarli per mettermi in lista.</span>
+        </label>
+        <p class="group-err" id="err-consenso" role="alert"></p>
+
+        <!-- DA RIVEDERE prima di pubblicare: testo minimo, va allineato a
+             privacy.html (che oggi dice "sul sito non ci sono moduli") e,
+             se i dati vengono condivisi con gli organizzatori delle liste,
+             va detto qui chi sono. -->
+        <details class="ff__info">
+          <summary>Come usiamo i tuoi dati</summary>
+          <p>Nome, cognome, telefono ed email servono solo a metterti nella lista che hai scelto per il Forlì Fest e a riconoscerti all'ingresso. Li tratta Pubby S.r.l. (Via Gioacchino Rossini 10, Dogana, San Marino) insieme agli organizzatori della serata, e li cancelliamo dopo l'evento. Per qualsiasi richiesta: <a href="mailto:p.arzilli@pubby.sm">p.arzilli@pubby.sm</a>. Tutti i dettagli in <a href="privacy.html">Privacy e cookie</a>.</p>
+        </details>
+
+        <div class="ff__send">
+          <button class="btn btn--red" type="submit" id="ff-submit">Mettimi in lista</button>
+        </div>
+        <p class="ff__alert" id="ff-alert" role="alert"></p>
+      </form>
+
+      <div class="done" id="ff-done" hidden tabindex="-1">
+        <p class="eyebrow">Forlì Fest · 10–11 ottobre</p>
+        <h2 class="d1">Sei dentro. <span class="acc done__when" id="done-when">Ci vediamo il 10.</span></h2>
+        <p class="lead">Ti abbiamo messo in lista. All'ingresso basta dire il tuo nome.</p>
+        <div class="done__card">
+          <div class="done__list" id="done-list">Locali</div>
+          <p id="done-name">Mario Rossi</p>
+          <small>Fai uno screenshot, non si sa mai.</small>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="ff-foot">
+  <div class="wrap">
+    <strong>Pubby S.r.l.</strong> · COE SM31894 · <a href="privacy.html">Privacy</a> · <a href="note-legali.html">Note legali</a>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/forlifest.js" defer></script>
+</body>
+</html>

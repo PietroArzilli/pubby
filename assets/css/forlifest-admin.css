@@ -9,7 +9,8 @@ body.adm::before { display: none; }
 .adm-head { border-bottom: 1px solid var(--cream-faint); background: var(--brown-deep); }
 .adm-head__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 12px; }
 .adm-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.adm-brand > img { width: 72px; height: auto; }
+.adm-brand > a { flex: none; }
+.adm-brand > a img { width: 72px; height: auto; }
 .adm-brand__x { font-weight: 800; color: var(--red); }
 .adm-brand__tile { flex: none; display: grid; place-items: center; width: 34px; height: 34px; padding: 5px; border-radius: 9px; background: var(--cream); }
 .adm-brand__tile img { width: 100%; height: auto; }

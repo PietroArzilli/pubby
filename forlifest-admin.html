@@ -61,7 +61,7 @@
     <div class="adm-top">
       <div>
         <p class="eyebrow">Iscrizioni</p>
-        <h1 class="adm-title adm-title--sm" id="print-title">Sabato 10 ottobre</h1>
+        <h1 class="adm-title adm-title--sm" id="print-title">Forlifest</h1>
       </div>
       <div class="adm-actions">
         <button class="btn btn--ghost adm-btn" type="button" id="reload">Aggiorna</button>
@@ -70,17 +70,17 @@
       </div>
     </div>
 
-    <div class="adm-tabs" role="tablist" aria-label="Sera">
-      <button type="button" role="tab" class="adm-tab" data-sera="2026-10-10" aria-selected="true"><b>10</b> Sabato</button>
-      <button type="button" role="tab" class="adm-tab" data-sera="2026-10-11" aria-selected="false"><b>11</b> Domenica</button>
-    </div>
-
-    <!-- conteggi per lista della sera scelta: toccarne uno filtra -->
+    <!-- conteggi per lista: toccarne uno filtra. Ogni persona conta una
+         volta sola: e' in lista per tutte e due le sere -->
     <div class="adm-stats" id="stats"></div>
 
     <div class="adm-filters">
       <label class="sr" for="q">Cerca</label>
       <input id="q" type="search" placeholder="Cerca nome, telefono o email" autocomplete="off">
+      <label class="adm-toggle">
+        <input type="checkbox" id="solo-mk">
+        <span>Solo chi vuole sapere dei prossimi eventi (<span id="mk-count">0</span>)</span>
+      </label>
     </div>
 
     <p class="adm-count" id="count"></p>
@@ -96,6 +96,7 @@
             <th>Lista</th>
             <th>Telefono</th>
             <th class="col-email">Email</th>
+            <th class="col-mk">Nuovi eventi</th>
             <th class="col-when">Iscritto il</th>
             <th class="col-del"><span class="sr">Elimina</span></th>
           </tr>

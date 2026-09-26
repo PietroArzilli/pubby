@@ -120,13 +120,18 @@
         </label>
         <p class="group-err" id="err-consenso" role="alert"></p>
 
-        <!-- DA RIVEDERE prima di pubblicare: testo minimo, va allineato a
-             privacy.html (che oggi dice "sul sito non ci sono moduli") e,
-             se i dati vengono condivisi con gli organizzatori delle liste,
-             va detto qui chi sono. -->
+        <!-- consenso al marketing: separato, facoltativo, non spuntato.
+             Non puo' essere una condizione per entrare in lista (art. 7 GDPR) -->
+        <label class="consent consent--opt">
+          <input type="checkbox" name="marketing" id="marketing">
+          <span>Tenetemi aggiornato sui prossimi eventi: potete scrivermi via email, SMS o WhatsApp. <em>Facoltativo, e puoi dire basta quando vuoi.</em></span>
+        </label>
+
         <details class="ff__info">
           <summary>Come usiamo i tuoi dati</summary>
-          <p>Nome, cognome, telefono ed email servono solo a metterti nella lista che hai scelto per il Forlì Fest e a riconoscerti all'ingresso. Li tratta Pubby S.r.l. (Via Gioacchino Rossini 10, Dogana, San Marino) insieme agli organizzatori della serata, e li cancelliamo dopo l'evento. Per qualsiasi richiesta: <a href="mailto:p.arzilli@pubby.sm">p.arzilli@pubby.sm</a>. Tutti i dettagli in <a href="privacy.html">Privacy e cookie</a>.</p>
+          <p>Li tratta Pubby S.r.l. (Via Gioacchino Rossini 10, Dogana, San Marino). Nome, cognome, telefono ed email servono a metterti nella lista che hai scelto e a riconoscerti all'ingresso: per questo li vedono anche gli organizzatori del Forlì Fest e chi gestisce la tua lista, e li cancelliamo entro 30 giorni dall'evento.</p>
+          <p>Se spunti anche la seconda casella, li teniamo per avvisarti dei prossimi eventi finché non ci dici di smettere, e comunque non oltre 24 mesi. Senza quella casella non ti scriviamo.</p>
+          <p>Per qualsiasi richiesta: <a href="mailto:p.arzilli@pubby.sm">p.arzilli@pubby.sm</a>. Tutti i dettagli in <a href="privacy.html#liste-eventi">Privacy e cookie</a>.</p>
         </details>
 
         <div class="ff__send">

@@ -25,14 +25,14 @@ body.adm::before { display: none; }
 /* login */
 .adm-login { display: grid; gap: 16px; max-width: 380px; }
 .adm-field label { display: block; font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
-.adm-field input, .adm-filters input {
+.adm-field input, .adm-filters input[type='search'] {
   width: 100%; min-height: 50px; padding: 12px 16px;
   font: inherit; font-size: 1rem; font-weight: 600; color: var(--cream);
   background: var(--brown-deep);
   border: 1.5px solid rgba(255, 236, 171, 0.28); border-radius: 12px;
   -webkit-appearance: none; appearance: none;
 }
-.adm-field input:focus, .adm-filters input:focus { outline: none; border-color: var(--cream); box-shadow: 0 0 0 3px rgba(255, 59, 92, 0.55); }
+.adm-field input:focus, .adm-filters input[type='search']:focus { outline: none; border-color: var(--cream); box-shadow: 0 0 0 3px rgba(255, 59, 92, 0.55); }
 .adm-login .btn { width: 100%; }
 .adm-err { font-size: 0.9375rem; font-weight: 700; color: var(--red); }
 .adm-err:empty { display: none; }
@@ -43,18 +43,6 @@ body.adm::before { display: none; }
 .adm-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .adm-btn { padding: 11px 16px; font-size: 0.875rem; border-radius: 12px; }
 .adm-btn[disabled] { opacity: 0.5; cursor: default; transform: none; }
-
-/* sere */
-.adm-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 24px; max-width: 420px; }
-.adm-tab {
-  display: flex; align-items: baseline; gap: 10px;
-  padding: 12px 16px; border-radius: 14px;
-  border: 1.5px solid var(--cream-faint);
-  font-weight: 800; font-size: 0.9375rem; color: var(--cream-soft);
-}
-.adm-tab b { font-family: var(--display); font-weight: 400; font-size: 1.9rem; line-height: 1; color: var(--cream); }
-.adm-tab[aria-selected='true'] { background: var(--cream); border-color: var(--cream); color: var(--brown); }
-.adm-tab[aria-selected='true'] b { color: var(--brown); }
 
 /* conteggi per lista: sono anche il filtro */
 .adm-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 14px; }
@@ -71,6 +59,9 @@ body.adm::before { display: none; }
 @media (min-width: 760px) { .adm-stat--all { grid-column: auto; } }
 
 .adm-filters { margin-top: 14px; max-width: 420px; }
+.adm-toggle { display: flex; gap: 10px; align-items: center; margin-top: 12px; font-size: 0.9375rem; font-weight: 700; cursor: pointer; }
+.adm-toggle input { width: 20px; height: 20px; accent-color: var(--red); flex: none; }
+.adm-stats { margin-top: 24px; }
 .adm-count { margin-top: 18px; font-size: 0.875rem; font-weight: 700; color: var(--cream-soft); }
 
 /* tabella: su telefono ogni riga diventa una scheda */
@@ -86,6 +77,11 @@ body.adm::before { display: none; }
 .adm-table .t-muted { color: var(--cream-soft); }
 .adm-del { font-size: 0.8125rem; font-weight: 800; color: var(--cream-soft); padding: 4px 6px; border-radius: 8px; }
 .adm-del:hover { color: var(--red); }
+.adm-mk { font-size: 0.8125rem; font-weight: 800; }
+.adm-mk--si { color: var(--cream); }
+.adm-mk--no { color: var(--cream-soft); }
+.adm-mk-off { margin-left: 8px; font-size: 0.75rem; font-weight: 700; color: var(--cream-soft); text-decoration: underline; }
+.adm-mk-off:hover { color: var(--red); }
 
 /* solo schermo: un A4 in stampa e' largo ~700px e prenderebbe le schede */
 @media screen and (max-width: 759px) {
@@ -100,7 +96,9 @@ body.adm::before { display: none; }
   .adm-table td.t-name + td.t-name::before { content: ' '; }
   .adm-table td.t-list { margin-top: 4px; }
   .adm-table td.t-tel, .adm-table td.t-mail { margin-top: 4px; font-size: 0.875rem; word-break: break-all; }
-  .adm-table td.col-when { margin-top: 6px; font-size: 0.75rem; color: var(--cream-soft); }
+  .adm-table td.col-mk { margin-top: 6px; font-size: 0.8125rem; }
+  .adm-table td.col-mk::before { content: 'Nuovi eventi: '; font-weight: 700; color: var(--cream-soft); }
+  .adm-table td.col-when { margin-top: 4px; font-size: 0.75rem; color: var(--cream-soft); }
   .adm-table td.col-del { position: absolute; top: 10px; right: 10px; }
 }
 
@@ -110,7 +108,7 @@ body.adm::before { display: none; }
 @media print {
   @page { margin: 14mm 12mm; }
   body, body.adm { background: #fff; color: #000; font-size: 10.5pt; }
-  .adm-head, .adm-actions, .adm-tabs, .adm-stats, .adm-filters, .col-del, .col-email, .col-when, .adm-err, #login-view, .eyebrow { display: none !important; }
+  .adm-head, .adm-actions, .adm-stats, .adm-filters, .col-del, .col-when, .col-mk, .adm-err, #login-view, .eyebrow { display: none !important; }
   .adm-main { padding: 0; }
   .wrap { max-width: none; padding: 0; }
   .adm-title--sm { font-size: 22pt; margin: 0 0 4pt; color: #000; }
@@ -121,6 +119,7 @@ body.adm::before { display: none; }
   .adm-table td { border-bottom: 0.5pt solid #999; padding: 5pt 6pt; color: #000; }
   .adm-table tr { break-inside: avoid; }
   .adm-table .t-list, .adm-table .t-muted { color: #000; }
+  .adm-table td.col-email { word-break: break-all; font-size: 9.5pt; }
   .adm-table .col-check { display: table-cell; width: 16pt; }
   .adm-table td.col-check::before { content: ''; display: block; width: 10pt; height: 10pt; border: 1pt solid #000; }
 }

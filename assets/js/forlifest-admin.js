@@ -15,14 +15,12 @@
   var KEY = body.getAttribute('data-supabase-key');
   var STORE = 'ffadm';
 
-  var SERE = {
-    '2026-10-10': 'Sabato 10 ottobre',
-    '2026-10-11': 'Domenica 11 ottobre'
-  };
   var LISTE = ['Locali', 'SpottedUni', 'Younivibes', 'Baila Bonita'];
 
   var $ = function (id) { return document.getElementById(id); };
-  var state = { rows: [], sera: '2026-10-10', lista: '', q: '' };
+  // people: una voce per persona. Nel database chi si iscrive ha una riga
+  // per sera, ma e' in lista per tutte e due: qui si raggruppa per email
+  var state = { people: [], lista: '', q: '', soloMk: false };
 
   // ---------- sessione ----------
   // sessionStorage: chiudendo la scheda si esce. Puo' non esserci (navigazione
@@ -93,7 +91,7 @@
   function esci() {
     var s = leggiSessione();
     salvaSessione(null);
-    state.rows = [];
+    state.people = [];
     if (s) {
       fetch(URL_SB + '/auth/v1/logout', {
         method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + s.access }
@@ -111,7 +109,7 @@
       }
       return api('/rest/v1/forlifest_iscrizioni?select=*&order=cognome.asc,nome.asc');
     }).then(function (rows) {
-      state.rows = rows || [];
+      state.people = raggruppa(rows || []);
       mostra('list');
       disegna();
     }).catch(function (e) {
@@ -123,11 +121,29 @@
   }
 
   // ---------- elenco ----------
+  function raggruppa(rows) {
+    var perEmail = {};
+    var out = [];
+    rows.forEach(function (r) {
+      var p = perEmail[r.email];
+      if (!p) {
+        p = perEmail[r.email] = {
+          email: r.email, nome: r.nome, cognome: r.cognome, telefono: r.telefono,
+          lista: r.lista, creata_il: r.creata_il, mk: false, mk_il: null
+        };
+        out.push(p);
+      }
+      if (r.creata_il < p.creata_il) { p.creata_il = r.creata_il; }
+      if (r.consenso_marketing) { p.mk = true; p.mk_il = r.consenso_marketing_il; }
+    });
+    return out;
+  }
+
   function filtrate() {
     var q = state.q.toLowerCase().replace(/\s+/g, ' ').trim();
-    return state.rows.filter(function (r) {
-      if (r.serata !== state.sera) { return false; }
+    return state.people.filter(function (r) {
       if (state.lista && r.lista !== state.lista) { return false; }
+      if (state.soloMk && !r.mk) { return false; }
       if (!q) { return true; }
       var hay = (r.nome + ' ' + r.cognome + ' ' + r.cognome + ' ' + r.nome + ' ' + r.telefono + ' ' + r.email).toLowerCase();
       return hay.indexOf(q) !== -1;
@@ -148,11 +164,11 @@
   }
 
   function disegnaStats() {
-    var dellaSera = state.rows.filter(function (r) { return r.serata === state.sera; });
+    var tutti = state.people;
     var box = $('stats');
     box.textContent = '';
     [''].concat(LISTE).forEach(function (l) {
-      var n = l ? dellaSera.filter(function (r) { return r.lista === l; }).length : dellaSera.length;
+      var n = l ? tutti.filter(function (r) { return r.lista === l; }).length : tutti.length;
       var b = el('button', 'adm-stat' + (l ? '' : ' adm-stat--all'));
       b.type = 'button';
       b.setAttribute('aria-pressed', state.lista === l ? 'true' : 'false');
@@ -164,11 +180,9 @@
   }
 
   function disegna() {
-    Array.prototype.forEach.call(document.querySelectorAll('.adm-tab'), function (t) {
-      t.setAttribute('aria-selected', t.getAttribute('data-sera') === state.sera ? 'true' : 'false');
-    });
     // il titolo e' anche l'intestazione della stampa
-    $('print-title').textContent = SERE[state.sera] + (state.lista ? ' · ' + state.lista : '');
+    $('print-title').textContent = 'Forlifest' + (state.lista ? ' · ' + state.lista : '');
+    $('mk-count').textContent = String(state.people.filter(function (r) { return r.mk; }).length);
     disegnaStats();
 
     var rows = filtrate();
@@ -184,6 +198,17 @@
       var a = el('a', null, r.telefono); a.href = 'tel:' + r.telefono; tel.appendChild(a);
       tr.appendChild(tel);
       tr.appendChild(el('td', 't-mail t-muted col-email', r.email));
+      var mk = el('td', 'col-mk');
+      mk.appendChild(el('span', 'adm-mk ' + (r.mk ? 'adm-mk--si' : 'adm-mk--no'),
+        r.mk ? 'Sì, dal ' + dataOra(r.mk_il) : 'No'));
+      if (r.mk) {
+        var off = el('button', 'adm-mk-off', 'togli');
+        off.type = 'button';
+        off.setAttribute('aria-label', 'Togli il consenso ai nuovi eventi di ' + r.nome + ' ' + r.cognome);
+        off.addEventListener('click', function () { togliConsenso(r); });
+        mk.appendChild(off);
+      }
+      tr.appendChild(mk);
       tr.appendChild(el('td', 't-muted col-when', dataOra(r.creata_il)));
       var td = el('td', 'col-del');
       var del = el('button', 'adm-del', 'Elimina');
@@ -195,7 +220,7 @@
       tb.appendChild(tr);
     });
 
-    var tot = state.rows.filter(function (r) { return r.serata === state.sera; }).length;
+    var tot = state.people.length;
     $('count').textContent = rows.length === tot
       ? tot + (tot === 1 ? ' persona in lista' : ' persone in lista')
       : rows.length + ' di ' + tot + ' persone';
@@ -211,10 +236,25 @@
     api('/rest/v1/forlifest_iscrizioni?email=eq.' + encodeURIComponent(r.email), {
       method: 'DELETE', prefer: 'return=minimal'
     }).then(function () {
-      state.rows = state.rows.filter(function (x) { return x.email !== r.email; });
+      state.people = state.people.filter(function (x) { return x.email !== r.email; });
       disegna();
     }).catch(function () {
       $('list-err').textContent = 'Non sono riuscito a eliminare ' + chi + '. Riprova.';
+    });
+  }
+
+  // chi chiede di non essere piu' contattato: si toglie il consenso ma resta in lista
+  function togliConsenso(r) {
+    var chi = r.nome + ' ' + r.cognome;
+    if (!window.confirm('Togliere a ' + chi + ' il consenso ai nuovi eventi? Resta in lista.')) { return; }
+    api('/rest/v1/forlifest_iscrizioni?email=eq.' + encodeURIComponent(r.email), {
+      method: 'PATCH', prefer: 'return=minimal',
+      body: JSON.stringify({ consenso_marketing: false, consenso_marketing_il: null })
+    }).then(function () {
+      r.mk = false; r.mk_il = null;
+      disegna();
+    }).catch(function () {
+      $('list-err').textContent = 'Non sono riuscito a togliere il consenso a ' + chi + '. Riprova.';
     });
   }
 
@@ -229,12 +269,13 @@
   }
 
   function scaricaCsv() {
-    var righe = [['Serata', 'Lista', 'Cognome', 'Nome', 'Telefono', 'Email', 'Iscritto il']];
+    var righe = [['Lista', 'Cognome', 'Nome', 'Telefono', 'Email', 'Nuovi eventi', 'Consenso dal', 'Iscritto il']];
     filtrate().forEach(function (r) {
-      righe.push([r.serata, r.lista, r.cognome, r.nome, r.telefono, r.email, dataOra(r.creata_il)]);
+      righe.push([r.lista, r.cognome, r.nome, r.telefono, r.email, r.mk ? 'si' : 'no',
+        r.mk ? dataOra(r.mk_il) : '', dataOra(r.creata_il)]);
     });
     var csv = '﻿' + righe.map(function (r) { return r.map(cella).join(';'); }).join('\r\n');
-    var nome = 'forlifest-' + state.sera + (state.lista ? '-' + state.lista.toLowerCase().replace(/\s+/g, '-') : '') + '.csv';
+    var nome = 'forlifest' + (state.soloMk ? '-ricontattabili' : '') + (state.lista ? '-' + state.lista.toLowerCase().replace(/\s+/g, '-') : '') + '.csv';
     var a = el('a');
     a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
     a.download = nome;
@@ -266,9 +307,7 @@
   $('csv').addEventListener('click', scaricaCsv);
   $('print').addEventListener('click', function () { window.print(); });
   $('q').addEventListener('input', function (e) { state.q = e.target.value; disegna(); });
-  Array.prototype.forEach.call(document.querySelectorAll('.adm-tab'), function (t) {
-    t.addEventListener('click', function () { state.sera = t.getAttribute('data-sera'); disegna(); });
-  });
+  $('solo-mk').addEventListener('change', function (e) { state.soloMk = e.target.checked; disegna(); });
 
   if (leggiSessione()) { carica(); } else { mostra('login'); }
 })();

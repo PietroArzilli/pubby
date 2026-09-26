@@ -45,7 +45,8 @@
       cognome: $('cognome').value.trim(),
       telefono: $('telefono').value.replace(/[\s.\-\/()]/g, ''),
       email: $('email').value.trim().toLowerCase(),
-      serate: SERATE.slice()
+      serate: SERATE.slice(),
+      marketing: $('marketing').checked
     };
   }
 
@@ -106,7 +107,8 @@
         p_cognome: v.cognome,
         p_telefono: v.telefono,
         p_email: v.email,
-        p_serate: v.serate
+        p_serate: v.serate,
+        p_marketing: v.marketing
       })
     }).then(function (res) {
       return res.json().catch(function () { return {}; }).then(function (body) {

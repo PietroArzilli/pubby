@@ -14,9 +14,11 @@
 .collab__x { font-weight: 800; font-size: 1.125rem; line-height: 1; color: var(--red); }
 /* il gallo ha il contorno nero: sul marrone sparirebbe, quindi sta
    su una piastrella crema, che e' anche il suo fondo originale */
-.collab__ff {
+a.collab__ff {
   display: flex; align-items: center; gap: 10px; text-decoration: none;
+  transition: opacity 0.2s ease;
 }
+a.collab__ff:hover { opacity: 0.8; }
 .collab__tile {
   display: grid; place-items: center;
   width: 46px; height: 46px; border-radius: 12px;

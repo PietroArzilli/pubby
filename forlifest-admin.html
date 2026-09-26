@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Liste Forlì Fest — admin</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#301c1b">
+
+<link rel="icon" href="assets/icons/pubby-icon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icons/icon-32.png" sizes="32x32">
+
+<link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/forlifest-admin.css">
+</head>
+
+<!-- stessa chiave pubblica di forlifest.html: da sola non legge niente,
+     serve il login di un'email presente in forlifest_admin
+     (supabase/forlifest-admin.sql) -->
+<body class="adm"
+      data-supabase-url="https://kntjqcusvqrstjeruffq.supabase.co"
+      data-supabase-key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtudGpxY3VzdnFyc3RqZXJ1ZmZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MzMyNjMsImV4cCI6MjEwNjAwOTI2M30.wNh78u7gNKq-bu73Zs6BBH7MjgICYC5v4AiO14YN_40">
+
+<header class="adm-head">
+  <div class="wrap adm-head__bar">
+    <div class="adm-brand">
+      <img src="assets/logo-cream.png" alt="Pubby" width="84" height="30">
+      <span class="adm-brand__x" aria-hidden="true">×</span>
+      <span class="adm-brand__tile"><img src="assets/forlifest/logo-forlifest.png" alt="" width="480" height="380"></span>
+      <span class="adm-brand__name">Forlì Fest · liste</span>
+    </div>
+    <button class="adm-link" id="logout" type="button" hidden>Esci</button>
+  </div>
+</header>
+
+<main class="wrap adm-main">
+
+  <!-- login -->
+  <section id="login-view" hidden>
+    <p class="eyebrow">Area riservata</p>
+    <h1 class="adm-title">Le liste<br>del Forlì Fest</h1>
+    <form class="adm-login" id="login-form" novalidate>
+      <div class="adm-field">
+        <label for="l-email">Email</label>
+        <input id="l-email" type="email" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+      </div>
+      <div class="adm-field">
+        <label for="l-pass">Password</label>
+        <input id="l-pass" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn btn--red" type="submit" id="login-btn">Entra</button>
+      <p class="adm-err" id="login-err" role="alert"></p>
+    </form>
+  </section>
+
+  <!-- elenco -->
+  <section id="list-view" hidden>
+    <div class="adm-top">
+      <div>
+        <p class="eyebrow">Iscrizioni</p>
+        <h1 class="adm-title adm-title--sm" id="print-title">Sabato 10 ottobre</h1>
+      </div>
+      <div class="adm-actions">
+        <button class="btn btn--ghost adm-btn" type="button" id="reload">Aggiorna</button>
+        <button class="btn btn--ghost adm-btn" type="button" id="csv">Scarica CSV</button>
+        <button class="btn btn--cream adm-btn" type="button" id="print">Stampa / PDF</button>
+      </div>
+    </div>
+
+    <div class="adm-tabs" role="tablist" aria-label="Sera">
+      <button type="button" role="tab" class="adm-tab" data-sera="2026-10-10" aria-selected="true"><b>10</b> Sabato</button>
+      <button type="button" role="tab" class="adm-tab" data-sera="2026-10-11" aria-selected="false"><b>11</b> Domenica</button>
+    </div>
+
+    <!-- conteggi per lista della sera scelta: toccarne uno filtra -->
+    <div class="adm-stats" id="stats"></div>
+
+    <div class="adm-filters">
+      <label class="sr" for="q">Cerca</label>
+      <input id="q" type="search" placeholder="Cerca nome, telefono o email" autocomplete="off">
+    </div>
+
+    <p class="adm-count" id="count"></p>
+    <p class="adm-err" id="list-err" role="alert"></p>
+
+    <div class="adm-table-wrap">
+      <table class="adm-table">
+        <thead>
+          <tr>
+            <th class="col-check" aria-label="Entrato"></th>
+            <th>Cognome</th>
+            <th>Nome</th>
+            <th>Lista</th>
+            <th>Telefono</th>
+            <th class="col-email">Email</th>
+            <th class="col-when">Iscritto il</th>
+            <th class="col-del"><span class="sr">Elimina</span></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="adm-empty" id="empty" hidden>Ancora nessuno in questa lista.</p>
+  </section>
+
+</main>
+
+<script src="assets/js/forlifest-admin.js" defer></script>
+</body>
+</html>

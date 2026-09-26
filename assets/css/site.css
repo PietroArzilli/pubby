@@ -276,6 +276,24 @@ body::before {
 .hero .lead { margin-bottom: 30px; }
 .hero__note { margin-top: 16px; font-size: 0.875rem; color: var(--cream-soft); }
 
+/* invito a un evento in collab, sopra al titolo dell'hero.
+   Il gallo del Forli' Fest ha il contorno nero: sta su una piastrella crema */
+.promo {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-bottom: 26px; padding: 8px 18px 8px 8px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(255, 59, 92, 0.55);
+  background: rgba(255, 59, 92, 0.1);
+  text-decoration: none;
+  transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+.promo:hover { transform: translateY(-2px); background: rgba(255, 59, 92, 0.18); border-color: var(--red); }
+.promo__tile { flex: none; display: grid; place-items: center; width: 46px; height: 46px; padding: 7px; border-radius: 12px; background: var(--cream); }
+.promo__tile img { width: 100%; height: auto; }
+.promo__txt { display: grid; gap: 2px; }
+.promo__k { font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); }
+.promo__v { font-weight: 800; font-size: 1.0625rem; line-height: 1.2; }
+
 /* ---------- blocchi ---------- */
 .stack > * + * { margin-top: 20px; }
 /* il titolo puo' allargarsi, il paragrafo resta leggibile grazie a .lead */

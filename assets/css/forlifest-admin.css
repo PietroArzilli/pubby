@@ -103,6 +103,7 @@ body.adm::before { display: none; }
 }
 
 .adm-empty { margin-top: 24px; color: var(--cream-soft); }
+.adm-print-note { display: none; }
 
 /* ---------- stampa: lista per la porta, bianco e nero ---------- */
 @media print {
@@ -120,6 +121,10 @@ body.adm::before { display: none; }
   .adm-table tr { break-inside: avoid; }
   .adm-table .t-list, .adm-table .t-muted { color: #000; }
   .adm-table td.col-email { word-break: break-all; font-size: 9.5pt; }
+  .adm-print-note { display: block; margin: 0 0 8pt; font-size: 9pt; }
+  .adm-table tr.is-mk td.t-tel a, .adm-table tr.is-mk td.col-email {
+    text-decoration: underline; text-decoration-thickness: 1pt; text-underline-offset: 2pt;
+  }
   .adm-table .col-check { display: table-cell; width: 16pt; }
   .adm-table td.col-check::before { content: ''; display: block; width: 10pt; height: 10pt; border: 1pt solid #000; }
 }

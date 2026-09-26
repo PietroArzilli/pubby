@@ -189,7 +189,8 @@
     var tb = $('rows');
     tb.textContent = '';
     rows.forEach(function (r) {
-      var tr = el('tr');
+      // in stampa telefono ed email di chi ha dato il consenso sono sottolineati
+      var tr = el('tr', r.mk ? 'is-mk' : null);
       tr.appendChild(el('td', 'col-check'));
       tr.appendChild(el('td', 't-name', r.cognome));
       tr.appendChild(el('td', 't-name', r.nome));

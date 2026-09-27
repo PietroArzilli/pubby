@@ -46,7 +46,7 @@ body.adm::before { display: none; }
 
 /* conteggi per lista: sono anche il filtro */
 .adm-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 14px; }
-@media (min-width: 760px) { .adm-stats { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 760px) { .adm-stats { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); } }
 .adm-stat {
   display: grid; gap: 2px; text-align: left;
   padding: 12px 14px; border-radius: 14px;

@@ -15,7 +15,17 @@
   var KEY = body.getAttribute('data-supabase-key');
   var STORE = 'ffadm';
 
-  var LISTE = ['Locali', 'SpottedUni', 'Younivibes', 'Baila Bonita'];
+  // le liste del form. Younivibes e' stata tolta il 27/09/2026: chi ci si era
+  // gia' iscritto compare lo stesso, perche' le liste mostrate sono queste
+  // piu' quelle trovate nei dati (vedi listeDaMostrare)
+  var LISTE = ['Locali', 'SpottedUni', 'Baila Bonita'];
+  function listeDaMostrare() {
+    var extra = [];
+    state.people.forEach(function (r) {
+      if (LISTE.indexOf(r.lista) === -1 && extra.indexOf(r.lista) === -1) { extra.push(r.lista); }
+    });
+    return LISTE.concat(extra.sort());
+  }
 
   var $ = function (id) { return document.getElementById(id); };
   // people: una voce per persona. Nel database chi si iscrive ha una riga
@@ -167,7 +177,7 @@
     var tutti = state.people;
     var box = $('stats');
     box.textContent = '';
-    [''].concat(LISTE).forEach(function (l) {
+    [''].concat(listeDaMostrare()).forEach(function (l) {
       var n = l ? tutti.filter(function (r) { return r.lista === l; }).length : tutti.length;
       var b = el('button', 'adm-stat' + (l ? '' : ' adm-stat--all'));
       b.type = 'button';

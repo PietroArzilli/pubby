@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Liste eventi — admin</title>
+<title>Lista Halloween</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#301c1b">
 
@@ -17,10 +17,12 @@
 <link rel="stylesheet" href="assets/css/forlifest-admin.css">
 </head>
 
-<!-- stessa chiave pubblica di forlifest.html: da sola non legge niente,
-     serve il login di un'email presente in forlifest_admin
-     (supabase/forlifest-admin.sql). Vale per tutti gli eventi: le liste di
-     Halloween stanno nello stesso progetto (supabase/halloween.sql) -->
+<!-- Lista di Halloween per gli organizzatori (Baila Bonita), in sola lettura.
+     Non e' linkata da nessuna parte: l'indirizzo lo diamo a loro. La
+     protezione pero' e' il login, non l'indirizzo (il repo e' pubblico).
+     Chi entra vede solo cognome, nome, telefono e ora d'iscrizione, tramite
+     halloween_lista_staff() (supabase/halloween.sql). Niente Forlì Fest,
+     niente consenso marketing, niente cancellazioni. -->
 <body class="adm"
       data-supabase-url="https://kntjqcusvqrstjeruffq.supabase.co"
       data-supabase-key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtudGpxY3VzdnFyc3RqZXJ1ZmZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MzMyNjMsImV4cCI6MjEwNjAwOTI2M30.wNh78u7gNKq-bu73Zs6BBH7MjgICYC5v4AiO14YN_40">
@@ -28,11 +30,10 @@
 <header class="adm-head">
   <div class="wrap adm-head__bar">
     <div class="adm-brand">
-      <a href="/"><img src="assets/logo-cream.png" alt="Pubby, torna al sito" width="84" height="30"></a>
+      <img src="assets/logo-cream.png" alt="Pubby" width="84" height="30">
       <span class="adm-brand__x" aria-hidden="true">×</span>
-      <!-- logo e nome cambiano con l'evento scelto (forlifest-admin.js) -->
-      <a class="adm-brand__tile" id="brand-tile" href="https://www.forlifest.com" target="_blank" rel="noopener"><img id="brand-logo" src="assets/forlifest/logo-forlifest.png" alt="Forlì Fest, sito ufficiale" width="480" height="380"></a>
-      <span class="adm-brand__name" id="brand-name">Forlì Fest · liste</span>
+      <span class="adm-brand__tile adm-brand__tile--clear"><img src="halloween/assets/baila-bonita.svg" alt="Baila Bonita" width="177" height="117"></span>
+      <span class="adm-brand__name">Halloween · lista</span>
     </div>
     <button class="adm-link" id="logout" type="button" hidden>Esci</button>
   </div>
@@ -42,12 +43,12 @@
 
   <!-- login -->
   <section id="login-view" hidden>
-    <p class="eyebrow">Area riservata</p>
-    <h1 class="adm-title">Le liste<br>degli eventi</h1>
+    <p class="eyebrow">Area organizzatori</p>
+    <h1 class="adm-title">La lista<br>di Halloween</h1>
     <form class="adm-login" id="login-form" novalidate>
       <div class="adm-field">
-        <label for="l-email">Email</label>
-        <input id="l-email" type="email" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+        <label for="l-user">Nome utente</label>
+        <input id="l-user" type="text" autocomplete="username" autocapitalize="characters" spellcheck="false" required>
       </div>
       <div class="adm-field">
         <label for="l-pass">Password</label>
@@ -58,18 +59,12 @@
     </form>
   </section>
 
-  <!-- elenco -->
+  <!-- elenco, sola lettura -->
   <section id="list-view" hidden>
-    <!-- un evento alla volta: ognuno ha la sua tabella nel database -->
-    <div class="adm-events" role="group" aria-label="Evento">
-      <button class="adm-event" type="button" data-ev="forlifest" aria-pressed="true">Forlì Fest</button>
-      <button class="adm-event" type="button" data-ev="halloween" aria-pressed="false">Halloween</button>
-    </div>
-
     <div class="adm-top">
       <div>
-        <p class="eyebrow">Iscrizioni</p>
-        <h1 class="adm-title adm-title--sm" id="print-title">Forlifest</h1>
+        <p class="eyebrow">Sabato 31 ottobre</p>
+        <h1 class="adm-title adm-title--sm">Halloween</h1>
       </div>
       <div class="adm-actions">
         <button class="btn btn--ghost adm-btn" type="button" id="reload">Aggiorna</button>
@@ -78,21 +73,14 @@
       </div>
     </div>
 
-    <!-- conteggi per lista: toccarne uno filtra. Ogni persona conta una
-         volta sola: e' in lista per tutte e due le sere -->
-    <div class="adm-stats" id="stats"></div>
+    <div class="adm-stats"><div class="adm-stat adm-stat--all"><span class="adm-stat__n" id="tot">0</span><span class="adm-stat__l">In lista</span></div></div>
 
     <div class="adm-filters">
       <label class="sr" for="q">Cerca</label>
-      <input id="q" type="search" placeholder="Cerca nome, telefono o email" autocomplete="off">
-      <label class="adm-toggle">
-        <input type="checkbox" id="solo-mk">
-        <span>Solo chi vuole sapere dei prossimi eventi (<span id="mk-count">0</span>)</span>
-      </label>
+      <input id="q" type="search" placeholder="Cerca nome o telefono" autocomplete="off">
     </div>
 
     <p class="adm-count" id="count"></p>
-    <p class="adm-print-note" id="print-note">Telefono ed email sottolineati: hanno dato il consenso a essere ricontattati per i prossimi eventi.</p>
     <p class="adm-err" id="list-err" role="alert"></p>
 
     <div class="adm-table-wrap">
@@ -102,23 +90,19 @@
             <th class="col-check" aria-label="Entrato"></th>
             <th>Cognome</th>
             <th>Nome</th>
-            <th data-col="lista">Lista</th>
             <th>Telefono</th>
-            <th class="col-email" data-col="email">Email</th>
-            <th class="col-mk">Nuovi eventi</th>
             <th class="col-when">Iscritto il</th>
-            <th class="col-del"><span class="sr">Elimina</span></th>
           </tr>
         </thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
-    <p class="adm-empty" id="empty" hidden>Ancora nessuno in questa lista.</p>
+    <p class="adm-empty" id="empty" hidden>Ancora nessuno in lista.</p>
   </section>
 
 </main>
 
 <script src="assets/js/adm-core.js" defer></script>
-<script src="assets/js/forlifest-admin.js" defer></script>
+<script src="assets/js/halloween-staff.js" defer></script>
 </body>
 </html>

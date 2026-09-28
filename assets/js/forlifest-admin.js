@@ -15,10 +15,11 @@
   var KEY = body.getAttribute('data-supabase-key');
   var STORE = 'ffadm';
 
-  // le liste del form. Younivibes e' stata tolta il 27/09/2026: chi ci si era
-  // gia' iscritto compare lo stesso, perche' le liste mostrate sono queste
-  // piu' quelle trovate nei dati (vedi listeDaMostrare)
-  var LISTE = ['Locali', 'SpottedUni', 'Baila Bonita'];
+  // le liste del form. Dal 28/09/2026 Younivibes ha preso il posto di
+  // SpottedUni. Una lista tolta compare lo stesso se ha ancora iscritti,
+  // perche' le liste mostrate sono queste piu' quelle trovate nei dati
+  // (vedi listeDaMostrare)
+  var LISTE = ['Locali', 'Younivibes', 'Baila Bonita'];
   function listeDaMostrare() {
     var extra = [];
     state.people.forEach(function (r) {

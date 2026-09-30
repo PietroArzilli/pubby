@@ -13,8 +13,12 @@
   function sessione(URL_SB, KEY, STORE, onScaduta) {
     var mem = null;
 
+    // una sessione di un altro progetto Supabase (per esempio quello vecchio,
+    // prima del trasloco del 30/09/2026) non vale qui: si rifa' il login
     function leggi() {
-      try { return JSON.parse(sessionStorage.getItem(STORE)) || mem; } catch (e) { return mem; }
+      var s;
+      try { s = JSON.parse(sessionStorage.getItem(STORE)) || mem; } catch (e) { s = mem; }
+      return s && s.sb === URL_SB ? s : null;
     }
     function salva(s) {
       mem = s;
@@ -36,6 +40,7 @@
             throw err;
           }
           var s = {
+            sb: URL_SB,
             access: b.access_token,
             refresh: b.refresh_token,
             scade: Date.now() + (b.expires_in || 3600) * 1000,
@@ -51,7 +56,12 @@
       var s = leggi();
       if (!s) { return Promise.reject(new Error('non loggato')); }
       if (Date.now() < s.scade - 60000) { return Promise.resolve(s); }
-      return token('refresh_token', { refresh_token: s.refresh });
+      // se il rinnovo non va, la sessione e' finita: si torna al login
+      return token('refresh_token', { refresh_token: s.refresh }).catch(function () {
+        salva(null);
+        onScaduta();
+        throw new Error('sessione scaduta');
+      });
     }
 
     function api(path, opts) {

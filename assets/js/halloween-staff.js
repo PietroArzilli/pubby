@@ -32,6 +32,7 @@
       mostra('list');
       disegna();
     }).catch(function (e) {
+      if (!sb.attiva()) { return; } // sessione finita: e' gia' tornato al login
       mostra('list');
       $('list-err').textContent = e.status === 403
         ? 'Questo utente non può vedere la lista. Scrivi a p.arzilli@pubby.sm.'

@@ -151,6 +151,7 @@
       disegna();
     }).catch(function (e) {
       if (chiave !== state.ev) { return; }
+      if (!sb.attiva()) { return; } // sessione finita: e' gia' tornato al login
       mostra('list');
       $('list-err').textContent = /admin/.test(e.message) ? e.message : 'Non riesco a caricare le iscrizioni. Riprova con Aggiorna.';
     }).then(function () {

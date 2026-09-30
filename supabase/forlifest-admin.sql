@@ -1,5 +1,7 @@
 -- Forlì Fest × Pubby — accesso admin alle iscrizioni
--- Da incollare nel SQL Editor DOPO forlifest.sql.
+-- Da incollare nel SQL Editor DOPO forlifest.sql, nel progetto "pubby generico".
+-- Poi in Authentication > Users va creato l'utente con la stessa email
+-- (Add user, con password e auto-confirm).
 --
 -- La pagina www.pubby.it/forlifest-admin fa login con Supabase Auth
 -- (email + password) e con quel token legge e cancella le iscrizioni.
@@ -40,3 +42,10 @@ create policy "admin legge" on public.forlifest_iscrizioni
 drop policy if exists "admin cancella" on public.forlifest_iscrizioni;
 create policy "admin cancella" on public.forlifest_iscrizioni
   for delete to authenticated using (public.forlifest_is_admin());
+
+-- dall'admin si puo' anche togliere il consenso ai nuovi eventi a chi lo chiede
+grant update (consenso_marketing, consenso_marketing_il) on table public.forlifest_iscrizioni to authenticated;
+drop policy if exists "admin aggiorna consenso" on public.forlifest_iscrizioni;
+create policy "admin aggiorna consenso" on public.forlifest_iscrizioni
+  for update to authenticated
+  using (public.forlifest_is_admin()) with check (public.forlifest_is_admin());

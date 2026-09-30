@@ -30,25 +30,15 @@
       // SpottedUni. Una lista tolta compare lo stesso se ha ancora iscritti
       // (vedi listeDaMostrare)
       liste: ['Locali', 'Younivibes', 'Baila Bonita'],
-      // nel database chi si iscrive ha una riga per sera, ma e' in lista per
-      // tutte e due: qui si raggruppa per email
+      // una riga a testa, in lista per tutte e due le sere
       leggi: function (rows) {
-        var perEmail = {};
-        var out = [];
-        rows.forEach(function (r) {
-          var p = perEmail[r.email];
-          if (!p) {
-            p = perEmail[r.email] = {
-              chiave: 'email=eq.' + encodeURIComponent(r.email),
-              email: r.email, nome: r.nome, cognome: r.cognome, telefono: r.telefono,
-              lista: r.lista, creata_il: r.creata_il, mk: false, mk_il: null
-            };
-            out.push(p);
-          }
-          if (r.creata_il < p.creata_il) { p.creata_il = r.creata_il; }
-          if (r.consenso_marketing) { p.mk = true; p.mk_il = r.consenso_marketing_il; }
+        return rows.map(function (r) {
+          return {
+            chiave: 'id=eq.' + encodeURIComponent(r.id),
+            email: r.email, nome: r.nome, cognome: r.cognome, telefono: r.telefono,
+            lista: r.lista, creata_il: r.creata_il, mk: r.consenso_marketing, mk_il: r.consenso_marketing_il
+          };
         });
-        return out;
       },
       daDove: 'dalla lista di tutte e due le sere'
     },

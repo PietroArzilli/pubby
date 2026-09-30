@@ -32,10 +32,13 @@ create table if not exists public.halloween_prenotazioni (
   consenso_marketing_il timestamptz
 );
 
--- un numero si puo' mettere in lista una volta sola (spazi e "+" non contano).
+-- un numero si puo' mettere in lista una volta sola. Contano solo le ultime
+-- 10 cifre: spazi, "+" e prefisso non contano, quindi 333 1234567,
+-- +39 333 1234567 e 0039 3331234567 sono lo stesso numero.
 -- Il doppione torna al form come 409, e il form lo dice all'utente.
-create unique index if not exists halloween_prenotazioni_telefono_unique
-  on public.halloween_prenotazioni (regexp_replace(telefono, '[^0-9]', '', 'g'));
+drop index if exists public.halloween_prenotazioni_telefono_unique;
+create unique index halloween_prenotazioni_telefono_unique
+  on public.halloween_prenotazioni (right(regexp_replace(telefono, '[^0-9]', '', 'g'), 10));
 
 -- la data del consenso e' la prova da conservare: la mette il database,
 -- il form non la manda

@@ -1,0 +1,57 @@
+/* =========================================================
+   Eventi in programma (eventi.html)
+   Ogni card ha i colori del suo evento; il resto e' il sito Pubby.
+   Poco Anton: si arriva da telefono, il titolo basta.
+   ========================================================= */
+
+.ev-head { padding-block: 16px; }
+.ev-head .logo img { width: 92px; height: auto; }
+@media (min-width: 560px) { .ev-head .logo img { width: 110px; } }
+
+.ev-hero { position: relative; overflow: hidden; padding-block: clamp(24px, 6vw, 64px) clamp(48px, 9vw, 96px); }
+.ev-hero .d2 { margin-block: 12px 14px; }
+.ev-hero .lead { margin-bottom: clamp(28px, 5vw, 44px); }
+
+.ev-list { display: grid; gap: 18px; position: relative; z-index: 1; }
+@media (min-width: 760px) { .ev-list { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+
+.ev {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: clamp(20px, 4vw, 28px);
+  border-radius: var(--radius-lg);
+}
+.ev[hidden] { display: none; }
+.ev__brand { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+.ev__name { font-weight: 800; font-size: 1.375rem; line-height: 1.1; }
+.ev__when { font-weight: 800; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; }
+.ev__txt { max-width: 40ch; }
+/* il pulsante sta in fondo anche se i testi delle due card hanno lunghezze diverse */
+.ev__btn { margin-top: auto; align-self: flex-start; }
+
+/* Forlì Fest: i colori del sito, il gallo su piastrella crema come nella sua pagina */
+.ev--ff { background: var(--brown-soft); border: 1.5px solid rgba(255, 59, 92, 0.55); }
+.ev--ff .ev__tile {
+  display: grid; place-items: center; flex: none;
+  width: 54px; height: 54px; padding: 8px; border-radius: 12px;
+  background: var(--cream);
+}
+.ev--ff .ev__tile img { width: 100%; height: auto; }
+.ev--ff .ev__when { color: var(--red); }
+.ev--ff .ev__txt { color: var(--cream-soft); }
+.ev--ff .ev__btn { background: var(--red); color: var(--brown); }
+.ev--ff .ev__btn:hover { background: #ff5872; }
+
+/* Halloween: il blu e il rosa della sua pagina (halloween/index.html).
+   Bianco su blu 6,9:1, blu notte su rosa 9,3:1 */
+.ev--hw { background: #2a3bd4; color: #fff; }
+.ev--hw .ev__bb { flex: none; height: 54px; width: auto; filter: drop-shadow(0 4px 8px rgba(8, 12, 90, 0.45)); }
+.ev--hw .ev__when { color: #ffd3f0; }
+.ev--hw .ev__txt { color: rgba(255, 255, 255, 0.86); }
+.ev--hw .ev__btn { background: #ff9bd9; color: #0d1263; }
+.ev--hw .ev__btn:hover { background: #ffd3f0; }
+
+.ev-empty { color: var(--cream-soft); max-width: 46ch; }
+.ev-empty a { color: var(--cream); }
+
+.ev-foot { padding-block: 32px; border-top: 1px solid var(--cream-faint); background: var(--brown-deep); font-size: 0.8125rem; color: var(--cream-soft); }
+.ev-foot a { color: inherit; }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Eventi in programma — Pubby</title>
+<meta name="description" content="Le serate in cui Pubby ti mette in lista: scegli l'evento, lascia i tuoi dati e ci vediamo all'ingresso.">
+<!-- come le pagine delle liste: ci si arriva dal pulsante nella home e dai
+     link in bio, non dai motori di ricerca. Non e' in sitemap.xml -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#301c1b">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Pubby">
+<meta property="og:title" content="Eventi in programma — Pubby">
+<meta property="og:description" content="Scegli l'evento e mettiti in lista.">
+<meta property="og:image" content="https://www.pubby.it/assets/og/pubby-og.jpg">
+
+<link rel="icon" href="assets/icons/pubby-icon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icons/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+
+<link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/eventi.css">
+</head>
+
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+
+<header class="ev-head">
+  <div class="wrap">
+    <a class="logo" href="/"><img src="assets/logo-cream.png" alt="Pubby, torna alla home" width="104" height="38"></a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="ev-hero grain">
+    <div class="wrap">
+      <p class="eyebrow">Eventi in programma</p>
+      <h1 class="d2">Scegli la serata.</h1>
+      <p class="lead">Ti mettiamo in lista noi: lasci i tuoi dati e all'ingresso basta il tuo nome.</p>
+
+      <!-- un evento = una card. data-fino e' l'ultimo giorno dell'evento:
+           il giorno dopo la card sparisce da sola (assets/js/eventi.js).
+           Per aggiungere un evento copia una card e cambia testi e colori. -->
+      <div class="ev-list">
+
+        <article class="ev ev--ff" data-fino="2026-10-11">
+          <div class="ev__brand">
+            <span class="ev__tile"><img src="assets/forlifest/logo-forlifest.png" alt="" width="480" height="380"></span>
+            <span class="ev__name">Forlì Fest</span>
+          </div>
+          <p class="ev__when">Sabato 10 e domenica 11 ottobre</p>
+          <p class="ev__txt">Due sere, una sola iscrizione: scegli la tua lista e sei dentro per tutte e due.</p>
+          <a class="btn ev__btn" href="forlifest.html">Mettiti in lista <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="ev ev--hw" data-fino="2026-10-31">
+          <div class="ev__brand">
+            <img class="ev__bb" src="halloween/assets/baila-bonita.svg" alt="" width="177" height="117">
+            <span class="ev__name">Halloween</span>
+          </div>
+          <p class="ev__when">Sabato 31 ottobre</p>
+          <p class="ev__txt">La notte di Halloween con Baila Bonita e BRN. Lascia nome e telefono e ci vediamo all'ingresso.</p>
+          <a class="btn ev__btn" href="halloween/">Mettiti in lista <span aria-hidden="true">→</span></a>
+        </article>
+
+      </div>
+
+      <p class="ev-empty" id="ev-empty" hidden>Per ora non ci sono eventi in programma. Torna a trovarci, o seguici su Instagram <a href="https://www.instagram.com/pubbyit/">@pubbyit</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="ev-foot">
+  <div class="wrap">
+    <strong>Pubby S.r.l.</strong> · COE SM31894 · <a href="privacy.html">Privacy</a> · <a href="note-legali.html">Note legali</a>
+  </div>
+</footer>
+
+<script src="assets/js/eventi.js" defer></script>
+</body>
+</html>

@@ -30,6 +30,9 @@
       // SpottedUni. Una lista tolta compare lo stesso se ha ancora iscritti
       // (vedi listeDaMostrare)
       liste: ['Locali', 'Younivibes', 'Baila Bonita'],
+      // il prezzo d'ingresso dipende da quando si e' iscritto: fino al 5 ottobre
+      // compreso (ora italiana) 15€, dal 6 in poi 20€
+      prezzo: { finoAl: '2026-10-05', prima: '15€', dopo: '20€' },
       // una riga a testa, in lista per tutte e due le sere
       leggi: function (rows) {
         return rows.map(function (r) {
@@ -63,6 +66,15 @@
       daDove: 'dalla lista di Halloween'
     }
   };
+
+  // giorno dell'iscrizione in ora italiana (AAAA-MM-GG), cosi' chi si iscrive
+  // il 5 alle 23:30 paga ancora il prezzo di prima
+  var giornoRoma = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome', year: 'numeric', month: '2-digit', day: '2-digit' });
+  function prezzoDi(r) {
+    var p = ev().prezzo;
+    if (!p) { return ''; }
+    return giornoRoma.format(new Date(r.creata_il)) <= p.finoAl ? p.prima : p.dopo;
+  }
 
   var state = { ev: 'forlifest', people: [], lista: '', q: '', soloMk: false };
   var ev = function () { return EVENTI[state.ev]; };
@@ -130,6 +142,7 @@
     });
     Array.prototype.forEach.call(document.querySelectorAll('th[data-col="lista"]'), function (th) { th.hidden = !e.conLista; });
     Array.prototype.forEach.call(document.querySelectorAll('th[data-col="email"]'), function (th) { th.hidden = !e.conEmail; });
+    Array.prototype.forEach.call(document.querySelectorAll('th[data-col="prezzo"]'), function (th) { th.hidden = !e.prezzo; });
     $('q').placeholder = e.conEmail ? 'Cerca nome, telefono o email' : 'Cerca nome o telefono';
     $('print-note').textContent = (e.conEmail ? 'Telefono ed email sottolineati' : 'Telefono sottolineato') +
       ': hanno dato il consenso a essere ricontattati per i prossimi eventi.';
@@ -204,6 +217,7 @@
       tr.appendChild(el('td', 't-name', r.cognome));
       tr.appendChild(el('td', 't-name', r.nome));
       if (e.conLista) { tr.appendChild(el('td', 't-list', r.lista)); }
+      if (e.prezzo) { tr.appendChild(el('td', 't-price', '(' + prezzoDi(r) + ')')); }
       var tel = el('td', 't-tel');
       var a = el('a', null, r.telefono); a.href = 'tel:' + r.telefono.replace(/\s+/g, ''); tel.appendChild(a);
       tr.appendChild(tel);
@@ -274,11 +288,13 @@
   function scaricaCsv() {
     var e = ev();
     var testa = ['Cognome', 'Nome', 'Telefono'];
+    if (e.prezzo) { testa.splice(2, 0, 'Prezzo'); }
     if (e.conLista) { testa.unshift('Lista'); }
     if (e.conEmail) { testa.push('Email'); }
     var righe = [testa.concat(['Nuovi eventi', 'Consenso dal', 'Iscritto il'])];
     filtrate().forEach(function (r) {
       var riga = [r.cognome, r.nome, r.telefono];
+      if (e.prezzo) { riga.splice(2, 0, prezzoDi(r)); }
       if (e.conLista) { riga.unshift(r.lista); }
       if (e.conEmail) { riga.push(r.email); }
       righe.push(riga.concat([r.mk ? 'si' : 'no', r.mk && r.mk_il ? dataOra(r.mk_il) : '', dataOra(r.creata_il)]));

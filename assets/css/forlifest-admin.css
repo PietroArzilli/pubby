@@ -86,6 +86,7 @@ body.adm::before { display: none; }
 .adm-table .t-name { font-weight: 800; }
 .adm-table .t-list { font-weight: 700; color: var(--red); white-space: nowrap; }
 .adm-table .t-muted { color: var(--cream-soft); }
+.adm-table .t-price { font-weight: 800; white-space: nowrap; }
 .adm-del { font-size: 0.8125rem; font-weight: 800; color: var(--cream-soft); padding: 4px 6px; border-radius: 8px; }
 .adm-del:hover { color: var(--red); }
 .adm-mk { font-size: 0.8125rem; font-weight: 800; }
@@ -106,6 +107,7 @@ body.adm::before { display: none; }
   .adm-table td.t-name { display: inline; font-size: 1.0625rem; }
   .adm-table td.t-name + td.t-name::before { content: ' '; }
   .adm-table td.t-list { margin-top: 4px; }
+  .adm-table td.t-price { margin-top: 4px; }
   .adm-table td.t-tel, .adm-table td.t-mail { margin-top: 4px; font-size: 0.875rem; word-break: break-all; }
   .adm-table td.col-mk { margin-top: 6px; font-size: 0.8125rem; }
   .adm-table td.col-mk::before { content: 'Nuovi eventi: '; font-weight: 700; color: var(--cream-soft); }
@@ -131,6 +133,7 @@ body.adm::before { display: none; }
   .adm-table td { border-bottom: 0.5pt solid #999; padding: 5pt 6pt; color: #000; }
   .adm-table tr { break-inside: avoid; }
   .adm-table .t-list, .adm-table .t-muted { color: #000; }
+  .adm-table .t-price { font-size: 11.5pt; }
   .adm-table td.col-email { word-break: break-all; font-size: 9.5pt; }
   .adm-print-note { display: block; margin: 0 0 8pt; font-size: 9pt; }
   .adm-table tr.is-mk td.t-tel a, .adm-table tr.is-mk td.col-email {

@@ -30,21 +30,21 @@
    piccola sotto il mouse e la card sfarfallerebbe. Si alza tutta la card */
 .ev .ev__btn:hover { transform: none; }
 .ev:has(.ev__btn:focus-visible) { outline: 2px solid var(--cream); outline-offset: 3px; }
-.ev__brand { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+/* in cima a ogni card l'immagine dell'evento, stessa forma della locandina
+   (4:5) cosi' le due card restano allineate */
+.ev__media {
+  aspect-ratio: 4 / 5; margin-bottom: 6px;
+  border-radius: calc(var(--radius-lg) - 10px); overflow: hidden;
+}
+.ev__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .ev__name { font-weight: 800; font-size: 1.375rem; line-height: 1.1; }
 .ev__when { font-weight: 800; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; }
 .ev__txt { max-width: 40ch; }
 /* il pulsante sta in fondo anche se i testi delle due card hanno lunghezze diverse */
 .ev__btn { margin-top: auto; align-self: flex-start; }
 
-/* Forlì Fest: i colori del sito, il gallo su piastrella crema come nella sua pagina */
+/* Forlì Fest: i colori del sito, in cima la locandina */
 .ev--ff { background: var(--brown-soft); border: 1.5px solid rgba(255, 59, 92, 0.55); }
-.ev--ff .ev__tile {
-  display: grid; place-items: center; flex: none;
-  width: 54px; height: 54px; padding: 8px; border-radius: 12px;
-  background: var(--cream);
-}
-.ev--ff .ev__tile img { width: 100%; height: auto; }
 .ev--ff .ev__when { color: var(--red); }
 .ev--ff .ev__txt { color: var(--cream-soft); }
 .ev--ff .ev__btn { background: var(--red); color: var(--brown); }
@@ -53,7 +53,9 @@
 /* Halloween: il blu e il rosa della sua pagina (halloween/index.html).
    Bianco su blu 6,9:1, blu notte su rosa 9,3:1 */
 .ev--hw { background: #2a3bd4; color: #fff; }
-.ev--hw .ev__bb { flex: none; height: 54px; width: auto; filter: drop-shadow(0 4px 8px rgba(8, 12, 90, 0.45)); }
+/* il logo Baila Bonita grande, su un blu piu' scuro della card */
+.ev--hw .ev__media { display: grid; place-items: center; padding: 14%; background: radial-gradient(circle at 50% 40%, #3a4ce6, #141d8f); }
+.ev--hw .ev__media img { height: auto; object-fit: contain; filter: drop-shadow(0 8px 18px rgba(8, 12, 90, 0.5)); }
 .ev--hw .ev__when { color: #ffd3f0; }
 .ev--hw .ev__txt { color: rgba(255, 255, 255, 0.86); }
 .ev--hw .ev__btn { background: #ff9bd9; color: #0d1263; }

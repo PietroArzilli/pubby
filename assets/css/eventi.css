@@ -4,6 +4,11 @@
    Poco Anton: si arriva da telefono, il titolo basta.
    ========================================================= */
 
+/* tirando la pagina oltre i bordi (iPhone, browser di Instagram) sotto
+   compariva il blu di Halloween: lo sfondo della pagina e' sempre marrone
+   e il rimbalzo e' spento */
+html { background: var(--brown); overscroll-behavior-y: none; }
+
 .ev-head { padding-block: 16px; }
 .ev-head .logo img { width: 92px; height: auto; }
 @media (min-width: 560px) { .ev-head .logo img { width: 110px; } }

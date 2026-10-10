@@ -25,7 +25,7 @@
 <link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/forlifest.css">
+<link rel="stylesheet" href="assets/css/forlifest.css?v=2">
 </head>
 
 <body>
@@ -56,6 +56,26 @@
         <div class="date"><span class="date__day">Domenica</span><span class="date__n">11</span><span class="date__m">ottobre</span></div>
       </div>
       <p class="dates__note">Segnatele: la lista vale per tutte e due le sere.</p>
+    </div>
+
+    <!-- lista chiusa dall'admin (supabase/forlifest-chiusura.sql):
+         al posto di intro e form resta l'offerta del botteghino -->
+    <div class="wrap closed" id="ff-closed" hidden tabindex="-1">
+      <p class="eyebrow">Forlì Fest · 10–11 ottobre</p>
+      <h1 class="d1">La lista<br>è <span class="acc">chiusa.</span></h1>
+      <p class="lead">Niente più posti in lista, ma la festa resta aperta. Vieni lo stesso: al botteghino c'è un'offerta solo per chi arriva.</p>
+
+      <div class="ticket" aria-label="Offerta al botteghino: 4 drink a 25 euro">
+        <div class="ticket__main">
+          <span class="ticket__kicker">Solo al botteghino</span>
+          <span class="ticket__deal"><span class="ticket__n">4</span><span class="ticket__what">drink</span></span>
+        </div>
+        <div class="ticket__stub">
+          <span class="ticket__a">a</span>
+          <span class="ticket__price">25€</span>
+        </div>
+      </div>
+      <p class="closed__note">Chiedi l'offerta alla cassa, all'ingresso.</p>
     </div>
   </section>
 
@@ -162,6 +182,6 @@
 </footer>
 
 <script src="assets/js/site.js" defer></script>
-<script src="assets/js/forlifest.js?v=2" defer></script>
+<script src="assets/js/forlifest.js?v=3" defer></script>
 </body>
 </html>

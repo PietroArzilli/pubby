@@ -165,3 +165,48 @@ a.collab__ff:hover { opacity: 0.8; }
 /* footer ridotto */
 .ff-foot { padding-block: 32px; border-top: 1px solid var(--cream-faint); background: var(--brown-deep); font-size: 0.8125rem; color: var(--cream-soft); }
 .ff-foot a { color: inherit; }
+
+/* ---------- lista chiusa: l'offerta del botteghino ---------- */
+.closed { position: relative; max-width: 720px; }
+.closed[hidden], .ff[hidden] { display: none; }
+.closed:focus { outline: none; }
+.closed .d1 { font-size: clamp(2.8rem, 13vw, 6.5rem); margin-block: 14px 18px; }
+
+/* un biglietto: corpo rosso, matrice crema, tacche sulla piega */
+.ticket {
+  --notch: 14px;
+  display: grid; grid-template-columns: 1fr auto;
+  margin-top: 30px; max-width: 460px;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.35));
+  transform: rotate(-2deg);
+}
+.ticket__main, .ticket__stub { position: relative; padding: clamp(20px, 5vw, 28px); }
+.ticket__main {
+  background: var(--red); color: var(--brown);
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  -webkit-mask: radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top / 100% 51% no-repeat,
+                radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+          mask: radial-gradient(circle var(--notch) at 100% 0, transparent 98%, #000) top / 100% 51% no-repeat,
+                radial-gradient(circle var(--notch) at 100% 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+}
+.ticket__stub {
+  display: grid; align-content: center; justify-items: center; min-width: 118px;
+  background: var(--cream); color: var(--brown);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  border-left: 2px dashed rgba(48, 28, 27, 0.35);
+  -webkit-mask: radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top / 100% 51% no-repeat,
+                radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+          mask: radial-gradient(circle var(--notch) at 0 0, transparent 98%, #000) top / 100% 51% no-repeat,
+                radial-gradient(circle var(--notch) at 0 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+}
+.ticket__kicker { display: block; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+.ticket__deal { display: flex; align-items: baseline; gap: 10px; margin-top: 6px; }
+.ticket__n { font-family: var(--display); font-size: clamp(4.5rem, 20vw, 6.5rem); line-height: 0.9; }
+.ticket__what { font-family: var(--display); font-size: clamp(1.8rem, 8vw, 2.6rem); text-transform: uppercase; line-height: 1; }
+.ticket__a { font-size: 0.875rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
+.ticket__price { font-family: var(--display); font-size: clamp(2.4rem, 10vw, 3.2rem); line-height: 1; color: var(--red-deep); }
+.closed__note { margin-top: 26px; font-weight: 700; color: var(--cream-soft); }
+@media (prefers-reduced-motion: no-preference) {
+  .closed:not([hidden]) .ticket { animation: ticket-in 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+  @keyframes ticket-in { from { opacity: 0; transform: translateY(16px) rotate(2deg); } }
+}

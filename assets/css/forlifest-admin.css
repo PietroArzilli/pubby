@@ -142,3 +142,101 @@ body.adm::before { display: none; }
   .adm-table .col-check { display: table-cell; width: 16pt; }
   .adm-table td.col-check::before { content: ''; display: block; width: 10pt; height: 10pt; border: 1pt solid #000; }
 }
+
+/* ---------- chiusura della lista: il tasto nucleare ----------
+   Il giallo/nero e' fuori palette apposta: e' il segnale universale di
+   pericolo. Due gesti: si alza la protezione (.is-open), poi si tiene premuto
+   finche' l'anello non si riempie (--p da 0 a 1, lo muove forlifest-admin.js) */
+.nuke { margin-top: 26px; }
+.nuke[hidden], .nuke__panel[hidden], .nuke__closed[hidden] { display: none; }
+.nuke__panel {
+  position: relative; display: grid; gap: 22px; align-items: center;
+  padding: clamp(18px, 4vw, 26px); border-radius: 20px;
+  background: var(--brown-deep);
+  border: 6px solid transparent;
+  background-image:
+    linear-gradient(var(--brown-deep), var(--brown-deep)),
+    repeating-linear-gradient(-45deg, #ffd400 0 14px, #141010 14px 28px);
+  background-origin: border-box; background-clip: padding-box, border-box;
+}
+@media (min-width: 640px) { .nuke__panel { grid-template-columns: 1fr auto; } }
+.nuke__kicker { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #ffd400; }
+.nuke__title { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.8rem, 7vw, 2.4rem); line-height: 1; margin-top: 6px; }
+.nuke__hint { margin-top: 8px; font-size: 0.9375rem; font-weight: 600; color: var(--cream-soft); max-width: 34ch; }
+.nuke .adm-err { margin-top: 8px; }
+
+.nuke__device { justify-self: center; perspective: 700px; }
+.nuke__base {
+  position: relative; width: 188px; height: 188px; border-radius: 26px;
+  display: grid; place-items: center;
+  background: linear-gradient(145deg, #3b3a3f, #1a191c);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.12), inset 0 -3px 0 rgba(0, 0, 0, 0.5), 0 14px 30px rgba(0, 0, 0, 0.45);
+}
+/* viti agli angoli */
+.nuke__base::before {
+  content: ''; position: absolute; inset: 12px; border-radius: 16px; pointer-events: none;
+  background:
+    radial-gradient(circle at 0 0, #77767c 3px, transparent 4px) 0 0 / 100% 100% no-repeat,
+    radial-gradient(circle at 100% 0, #77767c 3px, transparent 4px) 0 0 / 100% 100% no-repeat,
+    radial-gradient(circle at 0 100%, #77767c 3px, transparent 4px) 0 0 / 100% 100% no-repeat,
+    radial-gradient(circle at 100% 100%, #77767c 3px, transparent 4px) 0 0 / 100% 100% no-repeat;
+}
+
+/* anello che si riempie tenendo premuto */
+.nuke__ring { position: absolute; inset: 22px; --p: 0; }
+.nuke__ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.nuke__ring circle {
+  fill: none; stroke: #ffd400; stroke-width: 6; stroke-linecap: round;
+  stroke-dasharray: 289; stroke-dashoffset: calc(289 * (1 - var(--p)));
+  filter: drop-shadow(0 0 6px rgba(255, 212, 0, 0.7));
+}
+
+.nuke__btn {
+  position: relative; width: 112px; height: 112px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 36% 30%, #ff8a9c 0, #ff3b5c 28%, #c3112f 70%, #7c0a1d 100%);
+  box-shadow: 0 9px 0 #5c0715, 0 16px 22px rgba(0, 0, 0, 0.55), inset 0 -6px 12px rgba(0, 0, 0, 0.35), inset 0 4px 8px rgba(255, 255, 255, 0.35);
+  transition: transform 0.08s, box-shadow 0.08s, filter 0.2s;
+  touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+.nuke__btn-label { font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brown-deep); text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35); }
+.nuke__btn:disabled { filter: saturate(0.6) brightness(0.8); cursor: default; }
+.nuke__btn.is-down { transform: translateY(7px); box-shadow: 0 2px 0 #5c0715, 0 5px 10px rgba(0, 0, 0, 0.5), inset 0 -4px 10px rgba(0, 0, 0, 0.4), inset 0 4px 8px rgba(255, 255, 255, 0.25); }
+.nuke__btn:focus-visible { outline: 3px solid #ffd400; outline-offset: 6px; }
+.nuke__base.is-open .nuke__btn:not(:disabled) { animation: nuke-pulse 1.4s ease-in-out infinite; }
+@keyframes nuke-pulse { 50% { filter: brightness(1.18) drop-shadow(0 0 14px rgba(255, 59, 92, 0.75)); } }
+
+/* protezione trasparente incernierata in alto */
+.nuke__cover {
+  position: absolute; inset: 14px; border-radius: 18px;
+  transform-origin: 50% 0; transform: rotateX(0);
+  transition: transform 0.45s cubic-bezier(0.3, 1.4, 0.5, 1);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.38) 0 18%, transparent 19% 100%),
+    repeating-linear-gradient(-45deg, rgba(255, 212, 0, 0.38) 0 10px, rgba(20, 16, 16, 0.3) 10px 20px);
+  border: 2px solid rgba(255, 212, 0, 0.85);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 6px 14px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(1.5px);
+}
+.nuke__cover::after {
+  /* linguetta per alzarla */
+  content: ''; position: absolute; left: 50%; bottom: -9px; width: 54px; height: 12px; margin-left: -27px;
+  border-radius: 0 0 8px 8px; background: #ffd400;
+}
+.nuke__cover:focus-visible { outline: 3px solid var(--cream); outline-offset: 4px; }
+.nuke__base.is-open .nuke__cover { transform: rotateX(-112deg); }
+
+/* a lista chiusa */
+.nuke__closed {
+  display: grid; gap: 16px; align-items: center;
+  padding: clamp(18px, 4vw, 26px); border-radius: 20px;
+  background: rgba(255, 59, 92, 0.12); border: 2px solid var(--red);
+}
+@media (min-width: 640px) { .nuke__closed { grid-template-columns: 1fr auto; } }
+.nuke__closed .nuke__kicker { color: var(--red); }
+
+@media (prefers-reduced-motion: reduce) {
+  .nuke__cover { transition: none; }
+  .nuke__base.is-open .nuke__btn:not(:disabled) { animation: none; }
+}
+@media print { .nuke { display: none !important; } }

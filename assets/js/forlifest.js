@@ -78,6 +78,28 @@
     done.focus({ preventScroll: true });
   }
 
+  // lista chiusa dall'admin: via intro e form, resta l'offerta del botteghino
+  var closed = $('ff-closed');
+  function chiusa() {
+    if (!closed || !closed.hidden) { return; }
+    $('intro').hidden = true;
+    form.closest('.ff').hidden = true;
+    closed.hidden = false;
+    document.title = 'Forlì Fest × Pubby — lista chiusa';
+  }
+
+  // all'apertura chiedo se la lista e' ancora aperta. Se non risponde lascio
+  // il form: e' comunque il database a rifiutare le iscrizioni a lista chiusa
+  if (sbUrl && sbKey && !demo) {
+    fetch(sbUrl + '/rest/v1/rpc/forlifest_stato', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: sbKey },
+      body: '{}'
+    }).then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (s) { if (s && s.chiusa) { chiusa(); } })
+      .catch(function () {});
+  }
+
   function invia(v) {
     if (demo) {
       return new Promise(function (ok) {
@@ -127,6 +149,12 @@
     submit.textContent = 'Un attimo…';
 
     invia(v).then(function (r) {
+      if (r.body && r.body.chiusa === true) {
+        chiusa();
+        window.scrollTo(0, 0);
+        closed.focus({ preventScroll: true });
+        return;
+      }
       if (r.status < 200 || r.status >= 300 || !r.body || typeof r.body.nuova !== 'boolean') {
         throw new Error('HTTP ' + r.status);
       }

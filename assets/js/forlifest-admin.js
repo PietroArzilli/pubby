@@ -33,6 +33,8 @@
       // il prezzo d'ingresso dipende da quando si e' iscritto: fino al 5 ottobre
       // compreso (ora italiana) 15€, dal 6 in poi 20€
       prezzo: { finoAl: '2026-10-05', prima: '15€', dopo: '20€' },
+      // la lista si puo' chiudere dal tasto rosso (supabase/forlifest-chiusura.sql)
+      chiusura: true,
       // una riga a testa, in lista per tutte e due le sere
       leggi: function (rows) {
         return rows.map(function (r) {
@@ -76,7 +78,7 @@
     return giornoRoma.format(new Date(r.creata_il)) <= p.finoAl ? p.prima : p.dopo;
   }
 
-  var state = { ev: 'forlifest', people: [], lista: '', q: '', soloMk: false };
+  var state = { ev: 'forlifest', people: [], lista: '', q: '', soloMk: false, stato: null };
   var ev = function () { return EVENTI[state.ev]; };
 
   // l'evento scelto resta nell'indirizzo (#halloween), cosi' si puo' salvare
@@ -144,6 +146,7 @@
     Array.prototype.forEach.call(document.querySelectorAll('th[data-col="email"]'), function (th) { th.hidden = !e.conEmail; });
     Array.prototype.forEach.call(document.querySelectorAll('th[data-col="prezzo"]'), function (th) { th.hidden = !e.prezzo; });
     $('q').placeholder = e.conEmail ? 'Cerca nome, telefono o email' : 'Cerca nome o telefono';
+    $('nuke').hidden = !e.chiusura;
     $('print-note').textContent = (e.conEmail ? 'Telefono ed email sottolineati' : 'Telefono sottolineato') +
       ': hanno dato il consenso a essere ricontattati per i prossimi eventi.';
   }
@@ -162,6 +165,7 @@
       state.people = EVENTI[chiave].leggi(rows || []);
       mostra('list');
       disegna();
+      if (EVENTI[chiave].chiusura) { caricaStato(); }
     }).catch(function (e) {
       if (chiave !== state.ev) { return; }
       if (!sb.attiva()) { return; } // sessione finita: e' gia' tornato al login
@@ -302,6 +306,99 @@
     A.scaricaCsv(state.ev + (state.soloMk ? '-ricontattabili' : '') +
       (state.lista ? '-' + state.lista.toLowerCase().replace(/\s+/g, '-') : '') + '.csv', righe);
   }
+
+  // ---------- chiusura della lista ----------
+  // Lo stato vero e' nel database: la pagina pubblica lo legge da li' e
+  // iscriviti_forlifest rifiuta le iscrizioni a lista chiusa.
+  var TIENI_MS = 1500;
+  var tieni = null; // { t0, raf } mentre il tasto e' premuto
+
+  function caricaStato() {
+    $('nuke-err').textContent = '';
+    return sb.api('/rest/v1/rpc/forlifest_stato', { method: 'POST', body: '{}' }).then(function (s) {
+      state.stato = s || { chiusa: false };
+      disegnaNuke();
+    }).catch(function () {
+      state.stato = null;
+      disegnaNuke();
+      $('nuke-err').textContent = 'Non riesco a leggere se la lista è aperta. Hai lanciato supabase/forlifest-chiusura.sql?';
+    });
+  }
+
+  function disegnaNuke() {
+    var chiusa = !!(state.stato && state.stato.chiusa);
+    $('nuke').querySelector('.nuke__panel').hidden = chiusa;
+    $('nuke-closed').hidden = !chiusa;
+    $('nuke-when').textContent = chiusa && state.stato.chiusa_il ? 'Chiusa il ' + dataOra(state.stato.chiusa_il) + '.' : '';
+    proteggi(true);
+  }
+
+  function proteggi(giu) {
+    var base = $('nuke').querySelector('.nuke__base');
+    base.classList.toggle('is-open', !giu);
+    $('nuke-cover').setAttribute('aria-expanded', giu ? 'false' : 'true');
+    $('nuke-cover').querySelector('.sr').textContent = giu ? 'Alza la protezione del tasto' : 'Abbassa la protezione del tasto';
+    $('nuke-btn').disabled = giu || !state.stato;
+    $('nuke-hint').textContent = giu
+      ? 'Alza la protezione, poi tieni premuto il tasto.'
+      : 'Tieni premuto finché l\'anello non è pieno. Chi apre la pagina vedrà solo l\'offerta del botteghino.';
+    anello(0);
+  }
+
+  function anello(p) { $('nuke').querySelector('.nuke__ring').style.setProperty('--p', String(p)); }
+
+  function premi(e) {
+    if ($('nuke-btn').disabled || tieni) { return; }
+    if (e.type === 'keydown' && e.key !== ' ' && e.key !== 'Enter') { return; }
+    if (e.type === 'keydown' && e.repeat) { return; }
+    e.preventDefault();
+    $('nuke-btn').classList.add('is-down');
+    tieni = { t0: performance.now() };
+    var passo = function (t) {
+      if (!tieni) { return; }
+      var p = Math.min(1, (t - tieni.t0) / TIENI_MS);
+      anello(p);
+      if (p >= 1) { tieni = null; $('nuke-btn').classList.remove('is-down'); cambiaStato(true); return; }
+      tieni.raf = requestAnimationFrame(passo);
+    };
+    tieni.raf = requestAnimationFrame(passo);
+  }
+
+  function lascia() {
+    if (!tieni) { return; }
+    cancelAnimationFrame(tieni.raf);
+    tieni = null;
+    $('nuke-btn').classList.remove('is-down');
+    anello(0);
+  }
+
+  function cambiaStato(chiusa) {
+    $('nuke-err').textContent = '';
+    $('nuke-btn').disabled = true;
+    $('nuke-reopen').disabled = true;
+    sb.api('/rest/v1/rpc/forlifest_chiudi', { method: 'POST', body: JSON.stringify({ p_chiusa: chiusa }) }).then(function (s) {
+      state.stato = s;
+      disegnaNuke();
+      if (chiusa && navigator.vibrate) { navigator.vibrate([60, 40, 160]); }
+    }).catch(function () {
+      proteggi(true);
+      $('nuke-err').textContent = chiusa ? 'Non sono riuscito a chiudere la lista. Riprova.' : 'Non sono riuscito a riaprire la lista. Riprova.';
+    }).then(function () { $('nuke-reopen').disabled = false; });
+  }
+
+  $('nuke-cover').addEventListener('click', function () {
+    proteggi($('nuke').querySelector('.nuke__base').classList.contains('is-open'));
+  });
+  $('nuke-btn').addEventListener('pointerdown', premi);
+  $('nuke-btn').addEventListener('keydown', premi);
+  ['pointerup', 'pointerleave', 'pointercancel', 'keyup', 'blur'].forEach(function (t) {
+    $('nuke-btn').addEventListener(t, lascia);
+  });
+  $('nuke-btn').addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  $('nuke-reopen').addEventListener('click', function () {
+    if (!window.confirm('Riaprire la lista del Forlì Fest? La gente potrà iscriversi di nuovo.')) { return; }
+    cambiaStato(false);
+  });
 
   // ---------- eventi ----------
   $('login-form').addEventListener('submit', function (e) {

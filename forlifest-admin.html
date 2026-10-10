@@ -14,7 +14,7 @@
 <link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/forlifest-admin.css?v=2">
+<link rel="stylesheet" href="assets/css/forlifest-admin.css?v=3">
 </head>
 
 <!-- stessa chiave pubblica di forlifest.html: da sola non legge niente,
@@ -78,6 +78,42 @@
       </div>
     </div>
 
+    <!-- chiusura della lista (solo Forlì Fest, supabase/forlifest-chiusura.sql).
+         Due gesti per non chiuderla per sbaglio: si alza la protezione, poi
+         si tiene premuto il tasto finche' l'anello non e' pieno -->
+    <section class="nuke" id="nuke" hidden aria-labelledby="nuke-title">
+      <div class="nuke__panel">
+        <div class="nuke__text">
+          <p class="nuke__kicker">Zona pericolo</p>
+          <h2 class="nuke__title" id="nuke-title">Chiudi la lista</h2>
+          <p class="nuke__hint" id="nuke-hint">Alza la protezione, poi tieni premuto il tasto.</p>
+          <p class="adm-err" id="nuke-err" role="alert"></p>
+        </div>
+        <div class="nuke__device">
+          <div class="nuke__base">
+            <span class="nuke__ring" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/></svg></span>
+            <button class="nuke__btn" type="button" id="nuke-btn" disabled aria-describedby="nuke-hint">
+              <span class="nuke__btn-label">Chiudi</span>
+            </button>
+            <button class="nuke__cover" type="button" id="nuke-cover" aria-expanded="false" aria-controls="nuke-btn">
+              <span class="sr">Alza la protezione del tasto</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- a lista chiusa -->
+      <div class="nuke__closed" id="nuke-closed" hidden>
+        <div>
+          <p class="nuke__kicker">Fatto</p>
+          <h2 class="nuke__title">Lista chiusa</h2>
+          <p class="nuke__hint" id="nuke-when"></p>
+          <p class="nuke__hint">Chi apre la pagina ora vede l'offerta del botteghino: 4 drink a 25€.</p>
+        </div>
+        <button class="btn btn--ghost adm-btn" type="button" id="nuke-reopen">Riapri la lista</button>
+      </div>
+    </section>
+
     <!-- conteggi per lista: toccarne uno filtra. Ogni persona conta una
          volta sola: e' in lista per tutte e due le sere -->
     <div class="adm-stats" id="stats"></div>
@@ -120,6 +156,6 @@
 </main>
 
 <script src="assets/js/adm-core.js?v=2" defer></script>
-<script src="assets/js/forlifest-admin.js?v=4" defer></script>
+<script src="assets/js/forlifest-admin.js?v=5" defer></script>
 </body>
 </html>

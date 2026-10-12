@@ -42,19 +42,6 @@ html { background: var(--brown); overscroll-behavior-y: none; }
 /* il pulsante sta in fondo anche se i testi delle due card hanno lunghezze diverse */
 .ev__btn { margin-top: auto; align-self: flex-start; }
 
-/* Forlì Fest: i colori del sito, il gallo su piastrella crema come nella sua pagina */
-.ev--ff { background: var(--brown-soft); border: 1.5px solid rgba(255, 59, 92, 0.55); }
-.ev--ff .ev__tile {
-  display: grid; place-items: center; flex: none;
-  width: 54px; height: 54px; padding: 8px; border-radius: 12px;
-  background: var(--cream);
-}
-.ev--ff .ev__tile img { width: 100%; height: auto; }
-.ev--ff .ev__when { color: var(--red); }
-.ev--ff .ev__txt { color: var(--cream-soft); }
-.ev--ff .ev__btn { background: var(--red); color: var(--brown); }
-.ev--ff:hover .ev__btn { background: #ff5872; }
-
 /* Halloween: il blu e il rosa della sua pagina (halloween/index.html).
    Bianco su blu 6,9:1, blu notte su rosa 9,3:1 */
 .ev--hw { background: #2a3bd4; color: #fff; }

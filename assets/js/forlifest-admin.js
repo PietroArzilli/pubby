@@ -21,6 +21,9 @@
   var EVENTI = {
     forlifest: {
       nome: 'Forlì Fest',
+      // ultimo giorno dell'evento (ora italiana): dal giorno dopo sta tra i
+      // passati, come le card di eventi.html (data-fino)
+      fino: '2026-10-11',
       stampa: 'Forlifest',
       tabella: 'forlifest_iscrizioni',
       logo: { src: 'assets/forlifest/logo-forlifest.png', alt: 'Forlì Fest, sito ufficiale', w: 480, h: 380, href: 'https://www.forlifest.com' },
@@ -49,6 +52,7 @@
     },
     halloween: {
       nome: 'Halloween',
+      fino: '2026-10-31',
       stampa: 'Halloween',
       tabella: 'halloween_prenotazioni',
       logo: { src: 'halloween/assets/baila-bonita.svg', alt: 'Baila Bonita', w: 177, h: 117, chiaro: true },
@@ -81,11 +85,36 @@
   var state = { ev: 'forlifest', people: [], lista: '', q: '', soloMk: false, stato: null };
   var ev = function () { return EVENTI[state.ev]; };
 
+  // In corso o passato: un evento e' passato dal giorno dopo il suo "fino".
+  function passato(chiave) {
+    return giornoRoma.format(new Date()) > EVENTI[chiave].fino;
+  }
+
   // l'evento scelto resta nell'indirizzo (#halloween), cosi' si puo' salvare
-  // il link e ricaricare senza perderlo
+  // il link e ricaricare senza perderlo. Senza indirizzo si apre il primo
+  // evento in corso (o, se sono tutti passati, il primo della lista).
   function eventoDaIndirizzo() {
     var h = location.hash.replace('#', '');
-    return EVENTI[h] ? h : 'forlifest';
+    if (EVENTI[h]) { return h; }
+    var chiavi = Object.keys(EVENTI);
+    return chiavi.filter(function (k) { return !passato(k); })[0] || chiavi[0];
+  }
+
+  // I bottoni degli eventi, divisi tra "In corso" e "Passati". Un gruppo
+  // vuoto non si vede.
+  function disegnaEventi() {
+    var gruppi = { attivi: $('ev-attivi'), passati: $('ev-passati') };
+    Object.keys(gruppi).forEach(function (g) { gruppi[g].querySelector('.adm-events__voci').textContent = ''; });
+    Object.keys(EVENTI).forEach(function (k) {
+      var gruppo = passato(k) ? gruppi.passati : gruppi.attivi;
+      var b = el('button', 'adm-event' + (passato(k) ? ' adm-event--passato' : ''), EVENTI[k].nome);
+      b.type = 'button';
+      b.setAttribute('data-ev', k);
+      b.setAttribute('aria-pressed', k === state.ev ? 'true' : 'false');
+      b.addEventListener('click', function () { if (k !== state.ev) { scegliEvento(k); } });
+      gruppo.querySelector('.adm-events__voci').appendChild(b);
+      gruppo.hidden = false;
+    });
   }
 
   function listeDaMostrare() {
@@ -137,6 +166,7 @@
       tile.removeAttribute('rel');
     }
     $('brand-name').textContent = e.nome + ' · liste';
+    $('print-title').textContent = e.stampa;
     document.title = 'Liste ' + e.nome + ' — admin';
 
     Array.prototype.forEach.call(document.querySelectorAll('[data-ev]'), function (b) {
@@ -418,12 +448,6 @@
     }).then(function () { $('login-btn').disabled = false; });
   });
 
-  Array.prototype.forEach.call(document.querySelectorAll('[data-ev]'), function (b) {
-    b.addEventListener('click', function () {
-      var chiave = b.getAttribute('data-ev');
-      if (chiave !== state.ev) { scegliEvento(chiave); }
-    });
-  });
   window.addEventListener('hashchange', function () {
     var chiave = eventoDaIndirizzo();
     if (chiave !== state.ev && sb.attiva()) { scegliEvento(chiave); }
@@ -437,6 +461,7 @@
   $('solo-mk').addEventListener('change', function (e) { state.soloMk = e.target.checked; disegna(); });
 
   state.ev = eventoDaIndirizzo();
+  disegnaEventi();
   intestazione();
   if (sb.attiva()) { carica(); } else { mostra('login'); }
 })();

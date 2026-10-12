@@ -38,8 +38,11 @@ body.adm::before { display: none; }
 .adm-err { font-size: 0.9375rem; font-weight: 700; color: var(--red); }
 .adm-err:empty { display: none; }
 
-/* scelta dell'evento: una sola tabella alla volta */
-.adm-events { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+/* scelta dell'evento: una sola tabella alla volta, divisi in corso/passati */
+.adm-events { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-bottom: 26px; }
+.adm-events__gruppo { display: grid; gap: 8px; }
+.adm-events__titolo { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-soft); }
+.adm-events__voci { display: flex; flex-wrap: wrap; gap: 8px; }
 .adm-event {
   padding: 10px 18px; border-radius: 999px;
   font-weight: 800; font-size: 0.9375rem; color: var(--cream-soft);
@@ -47,6 +50,9 @@ body.adm::before { display: none; }
 }
 .adm-event:hover { color: var(--cream); }
 .adm-event[aria-pressed='true'] { color: var(--brown); border-color: var(--red); background: var(--red); }
+/* passati: tratteggiati, cosi' si distinguono anche senza il colore */
+.adm-event--passato { border-style: dashed; }
+.adm-event--passato[aria-pressed='true'] { color: var(--brown); border-style: solid; border-color: var(--cream-soft); background: var(--cream-soft); }
 
 /* testata elenco */
 .adm-top { display: grid; gap: 18px; }

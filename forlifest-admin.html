@@ -14,7 +14,7 @@
 <link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="stylesheet" href="assets/css/forlifest-admin.css?v=3">
+<link rel="stylesheet" href="assets/css/forlifest-admin.css?v=4">
 </head>
 
 <!-- stessa chiave pubblica di forlifest.html: da sola non legge niente,
@@ -60,10 +60,18 @@
 
   <!-- elenco -->
   <section id="list-view" hidden>
-    <!-- un evento alla volta: ognuno ha la sua tabella nel database -->
-    <div class="adm-events" role="group" aria-label="Evento">
-      <button class="adm-event" type="button" data-ev="forlifest" aria-pressed="true">Forlì Fest</button>
-      <button class="adm-event" type="button" data-ev="halloween" aria-pressed="false">Halloween</button>
+    <!-- un evento alla volta: ognuno ha la sua tabella nel database. I
+         bottoni li crea forlifest-admin.js e li divide in corso/passati in
+         base alla data "fino" di ogni evento. -->
+    <div class="adm-events">
+      <div class="adm-events__gruppo" id="ev-attivi" hidden>
+        <p class="adm-events__titolo">In corso</p>
+        <div class="adm-events__voci" role="group" aria-label="Eventi in corso"></div>
+      </div>
+      <div class="adm-events__gruppo" id="ev-passati" hidden>
+        <p class="adm-events__titolo">Passati</p>
+        <div class="adm-events__voci" role="group" aria-label="Eventi passati"></div>
+      </div>
     </div>
 
     <div class="adm-top">
@@ -156,6 +164,6 @@
 </main>
 
 <script src="assets/js/adm-core.js?v=2" defer></script>
-<script src="assets/js/forlifest-admin.js?v=5" defer></script>
+<script src="assets/js/forlifest-admin.js?v=6" defer></script>
 </body>
 </html>
